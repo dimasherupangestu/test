@@ -1,0 +1,10 @@
+<div class="form-row pt-3">
+    <div class="col">
+        <input type="text" name="user_id" class="form-control" placeholder="Username Gmail / FB / Twitter" autocomplete="off">
+    </div>
+    <div class="col">
+        <select placeholder="Pilih Server" name="zone_id" class="form-control">
+          <option value="">Pilih Server</option><option value="Sand Libra">Sand Libra</option><option value="Sand Aquarius">Sand Aquarius</option><option value="Sand Dorado">Sand Dorado</option><option value="Sand Scorpius">Sand Scorpius</option><option value="Sand Pisces">Sand Pisces</option><option value="Sand Eridanus">Sand Eridanus</option><option value="Sand Orion">Sand Orion</option><option value="Aqua Aquarius">Aqua Aquarius</option><option value="Aqua Capricorn">Aqua Capricorn</option><option value="Aqua Scorpius">Aqua Scorpius</option><option value="Aqua Taurus">Aqua Taurus</option><option value="Aqua Carina">Aqua Carina</option><option value="Sand Aries">Sand Aries</option><option value="Sand Cancer">Sand Cancer</option><option value="Sand Capricorn">Sand Capricorn</option><option value="Sand Gemini">Sand Gemini</option><option value="Sand Leo">Sand Leo</option><option value="Sand Taurus">Sand Taurus</option><option value="Sand Virgo">Sand Virgo</option><option value="Aqua Aries">Aqua Aries</option><option value="Aqua Cancer">Aqua Cancer</option><option value="Aqua Gemini">Aqua Gemini</option><option value="Aqua Leo">Aqua Leo</option><option value="Aqua Libra">Aqua Libra</option><option value="Aqua Virgo">Aqua Virgo</option><option value="Aqua Pisces">Aqua Pisces</option><option value="Aqua Dorado">Aqua Dorado</option><option value="Aqua Orion">Aqua Orion</option><option value="Aqua Eridanus">Aqua Eridanus</option><option value="Sand Cygnus">Sand Cygnus</option><option value="Aqua Cygnus">Aqua Cygnus</option></select>
+                                    </select>
+    </div>
+</div>        
