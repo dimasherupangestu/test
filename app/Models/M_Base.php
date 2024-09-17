@@ -124,4 +124,22 @@ class M_Base extends Model
 	{
 		return $this->db->table($table)->set($data)->where('id', $id)->update();
 	}
+
+
+	public function images($file, $path = null)
+	{
+		if ($file->getError() == 0) {
+			if (in_array(strtolower($file->getClientExtension()), ['jpg', 'jpeg', 'png', 'webp', 'gif'])) {
+				$name = $file->getRandomName();
+
+				$file->move($path, $name);
+
+				return $name;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
 }

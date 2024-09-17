@@ -10,10 +10,10 @@ class Home extends BaseController
     public function index()
     {
 
-        if ($this->admin == false) {
-            $this->session->setFlashdata('error', 'Silahkan login dahulu');
-            return redirect()->to(base_url() . 'admin/login');
-        }
+        // if ($this->admin == false) {
+        //     $this->session->setFlashdata('error', 'Silahkan login dahulu');
+        //     return redirect()->to(base_url() . 'admin/login');
+        // }
 
 
         // if ($this->admin['level'] !== 'Superadmin') {
@@ -104,9 +104,9 @@ class Home extends BaseController
     public function login()
     {
 
-        if ($this->admin !== false) {
-            return redirect()->to(base_url() . '/Admin');
-        }
+        // if ($this->admin !== false) {
+        //     return redirect()->to(base_url() . '/Admin');
+        // }
 
         // $twoWeeksAgo = date('Y-m-d H:i:s', strtotime('-4 days'));
 
@@ -129,10 +129,12 @@ class Home extends BaseController
         // }
 
         if ($this->request->getPost('tombol')) {
+
             $data_post = [
                 'username' => addslashes(trim(htmlspecialchars($this->request->getPost('username')))),
                 'password' => addslashes(trim(htmlspecialchars($this->request->getPost('password')))),
             ];
+
 
             if (empty($data_post['username'])) {
                 $this->session->setFlashdata('error', 'Username tidak boleh kosong');
@@ -149,7 +151,7 @@ class Home extends BaseController
                             $this->session->set('admin', $admin[0]['username']);
 
                             $this->session->setFlashdata('success', 'Login berhasil');
-                            return redirect()->to(base_url() . '/hello');
+                            return redirect()->to(base_url() . 'admin/hello');
                         } else {
                             $this->session->setFlashdata('error', 'Akun kamu telah dinonaktifkan');
                             return redirect()->to(str_replace('index.php/', '', site_url(uri_string())));
@@ -188,5 +190,21 @@ class Home extends BaseController
                 throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
             }
         }
+    }
+
+    public function hello()
+    {
+
+        if ($this->admin == false) {
+            $this->session->setFlashdata('error', 'Silahkan login dahulu');
+            return redirect()->to(base_url() . '/admin/login');
+        }
+
+
+        $data = array_merge($this->base_data, [
+            'title' => 'Hello',
+        ]);
+
+        return view('Admin/Home/hello', $data);
     }
 }

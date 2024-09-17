@@ -31,6 +31,46 @@
       margin-left: 0 !important;
    }
 </style>
+<link rel="shortcut icon" href="<?= base_url(); ?>/assets/images/favicon-hiddengame.png">
+
+<meta name="description" content="" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+<!-- Library / Plugin Css Build -->
+<link rel="stylesheet" href="<?= base_url(); ?>/assets/admin2//css/core/libs.min.css" />
+
+<!-- Aos Animation Css -->
+<link rel="stylesheet" href="<?= base_url(); ?>/assets/admin2//vendor/aos/dist/aos.css" />
+
+<!-- Hope Ui Design System Css -->
+<link rel="stylesheet" href="<?= base_url(); ?>/assets/admin2//css/hope-ui.min.css?v=2.0.0" />
+
+<!-- Custom Css -->
+<link rel="stylesheet" href="<?= base_url(); ?>/assets/admin2//css/custom.min.css?v=2.0.0" />
+
+<!-- Dark Css -->
+<link rel="stylesheet" href="<?= base_url(); ?>/assets/admin2//css/dark.min.css" />
+
+<!-- Customizer Css -->
+<link rel="stylesheet" href="<?= base_url(); ?>/assets/admin2//css/customizer.min.css" />
+
+<!-- RTL Css -->
+<link rel="stylesheet" href="<?= base_url(); ?>/assets/admin2//css/rtl.min.css" />
+
+<!-- AddOn -->
+<link href="https://unpkg.com/bootstrap-table@1.21.0/dist/bootstrap-table.min.css" rel="stylesheet">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+<link rel="stylesheet" href="<?= base_url(); ?>/assets/css/icons.css">
+
+<link rel="stylesheet" href="<?= base_url(); ?>/assets/plugins/bootstrap-datatable/css/dataTables.bootstrap4.min.css">
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?compat=recaptcha" async defer></script>
+
+
 
 <div class="wrapper">
    <section class="login-content">
@@ -92,7 +132,7 @@
 
          </div>
          <div class="col-md-6 d-md-block d-none bg-primary p-0 mt-n1 vh-100 overflow-hidden">
-            <img src="https://i.ibb.co/rpj563Z/01.png" class="img-fluid gradient-main animated-scaleX" alt="images">
+            <!-- <img src="https://i.ibb.co/rpj563Z/01.png" class="img-fluid gradient-main animated-scaleX" alt="images"> -->
          </div>
       </div>
    </section>

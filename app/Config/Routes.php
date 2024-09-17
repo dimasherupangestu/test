@@ -35,8 +35,12 @@ $routes->setAutoRoute(true);
 
 // Place your route definitions here
 $routes->get('/', 'Home::index');
+$routes->match(['get', 'post'], 'games/(:any)', 'Games::index/$1');
 // admin hidengame
 $routes->match(['get', 'post'], 'SuperPag3', 'Admin\Home::index');
+// $routes->match(['get', 'post'], '/hello', 'Admin\Home::hello');
+$routes->match(['get', 'post'], '/admin/hello', 'Admin\Home::hello');
+
 $routes->match(['get', 'post'], '/admin/logout', 'Admin\Home::logout');
 $routes->match(['get', 'post'], '/admin/login', 'Admin\Home::login');
 // $routes->match(['get', 'post'], '/h1dD3nG4m33e', 'Admin\Home::login');
@@ -53,12 +57,15 @@ $routes->match(['get', 'post'], '/admin/kategori/add', 'Admin\Kategori::add');
 $routes->match(['get', 'post'], '/admin/kategori/edit/(:num)', 'Admin\Kategori::edit/$1');
 $routes->match(['get', 'post'], '/admin/kategori/delete/(:num)', 'Admin\Kategori::delete/$1');
 $routes->match(['get', 'post'], '/admin/password', 'Admin\Home::password');
-$routes->match(['get', 'post'], 'games/(:any)', 'Games::index/$1');
 
 // admin produk
 $routes->match(['get', 'post'], '/admin/produk', 'Admin\Produk::index');
 $routes->match(['get', 'post'], '/admin/produk/add', 'Admin\Produk::add');
 
+
+// admin postingan
+$routes->match(['get', 'post'], '/admin/postingan', 'Admin\Postingan::index');
+$routes->match(['get', 'post'], '/admin/postingan/edit/(:num)', 'Admin\Postingan::edit/$1');
 /*
 
  * --------------------------------------------------------------------

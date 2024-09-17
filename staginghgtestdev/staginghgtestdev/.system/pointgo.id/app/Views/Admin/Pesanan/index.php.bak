@@ -1,0 +1,152 @@
+<?php $this->extend('templateadmin'); ?>
+				
+				<?php $this->section('css'); ?>
+				<?php $this->endSection(); ?>
+				
+				<?php $this->section('content'); ?>
+				<div class="content" style="min-height: 590px;">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12">
+								
+								<?= $this->include('header-admin'); ?>
+
+								<div class="card">
+									<div class="card-body">
+										<h5 class="mb-3">Pesanan</h5>
+                                        <div class="alert alert-success" role="alert" style="padding:20px">
+                                          <h5 class="alert-heading">Cara Mengatasi Orderan Gagal</h5>
+                                            <p>Cek di link berikut <a href="https://hanz-digital.gitbook.io/cara-mengatasi-orderan-gagal/" style="color:#000000;text-decoration:underline">Cara Mengatasi Orderan Gagal</a></p>
+                                        </div>
+										<b class="d-block mb-1">Keterangan Status</b>
+										<ul class="mb-0 pl-4">
+											<li><b>Pending</b> : Pesanan belum dibayar / menunggu pembayaran</li>
+											<li><b>Processing</b> : Pesanan dalam proses oleh provider / manual</li>
+											<li><b>Success</b> : Pesanan telah berhasil diproses</li>
+											<li><b>Canceled</b> : Pesanan gagal diproses</li>
+											<li hidden><b>Expired</b> : Pesanan gagal / expired</li>
+										</ul>
+										<?= alert(); ?>
+									</div>
+									<div class="table-responsive">
+										<table class="table-white table table-striped">
+											<tr>
+												<th>No</th>
+												<th>No Transaksi</th>
+												<th>Produk</th>
+												<th>Metode</th>
+												<th>Provider</th>
+												<th>Status</th>
+												<th>Action</th>
+											</tr>
+											<?php $no = 1; foreach ($orders as $loop): ?>
+											<tr>
+												<td><?= $no++; ?></td>
+												<td><b class="cursor-pointer" onclick="detail('<?= $loop['order_id']; ?>');"><?= $loop['order_id']; ?></b>
+												<?php if (!empty($loop['voucher'])): ?>
+													<i class="fa fa-ticket"></i>
+												<?php endif ?>
+												<td>
+													<p class="mb-1"><?= $loop['product']; ?></p>
+													<?php 
+													if (!empty($loop['zone_id']) AND $loop['zone_id'] != 1 AND $loop['zone_id'] !== 'joki') {
+														echo "";
+													} else if (!empty($loop['zone_id']) AND $loop['zone_id'] != 1 AND $loop['zone_id'] !== 'skinml') {
+														echo "";
+													} else if (!empty($loop['zone_id']) AND $loop['zone_id'] != 1 AND $loop['zone_id'] !== 'sosmed') {
+														echo "";
+													} else if (!empty($loop['zone_id']) AND $loop['zone_id'] != 1 AND $loop['zone_id'] !== 'videomontage') {
+														echo "";
+													} else if (!empty($loop['zone_id']) AND $loop['zone_id'] != 1 AND $loop['zone_id'] !== 'topuplogin') {
+														echo "";
+													} else if (!empty($loop['zone_id']) AND $loop['zone_id'] != 1 AND $loop['zone_id'] !== 'lg-ragnarox') {
+														echo "";
+													} else if (!empty($loop['zone_id']) AND $loop['zone_id'] != 1 AND $loop['zone_id'] !== 'lg-dragonhunter') {
+														echo "";
+													} else if (!empty($loop['zone_id']) AND $loop['zone_id'] != 1 AND $loop['zone_id'] !== 'lg-fourgods') {
+														echo "";
+													} else if (!empty($loop['zone_id']) AND $loop['zone_id'] != 1 AND $loop['zone_id'] !== 'lg-genshinimpact') {
+														echo "";
+													} else if (!empty($loop['zone_id']) AND $loop['zone_id'] != 1 AND $loop['zone_id'] !== 'lg-ninokuni') {
+														echo "";
+													} else if (!empty($loop['zone_id']) AND $loop['zone_id'] != 1 AND $loop['zone_id'] !== 'lg-neverafter') {
+														echo "";
+													} else if (!empty($loop['zone_id']) AND $loop['zone_id'] != 1 AND $loop['zone_id'] !== 'lg-clashofclans') {
+														echo "";
+													} else if (!empty($loop['zone_id']) AND $loop['zone_id'] != 1 AND $loop['zone_id'] !== 'loginapex') {
+														echo "";
+													} else if (!empty($loop['zone_id']) AND $loop['zone_id'] != 1 AND $loop['zone_id'] !== 'loginefootball') {
+														echo "";
+													} else if (!empty($loop['zone_id']) AND $loop['zone_id'] != 1 AND $loop['zone_id'] !== 'loginff') {
+														echo "";
+													} else if (!empty($loop['zone_id']) AND $loop['zone_id'] != 1 AND $loop['zone_id'] !== 'logingenshin') {
+														echo "";
+													} else if (!empty($loop['zone_id']) AND $loop['zone_id'] != 1 AND $loop['zone_id'] !== 'loginml') {
+														echo "";
+													} else if (!empty($loop['zone_id']) AND $loop['zone_id'] != 1 AND $loop['zone_id'] !== 'loginninokuni') {
+														echo "";
+													} else if (!empty($loop['zone_id']) AND $loop['zone_id'] != 1 AND $loop['zone_id'] !== 'loginpokemon') {
+														echo "";
+													} else if (!empty($loop['zone_id']) AND $loop['zone_id'] != 1 AND $loop['zone_id'] !== 'loginraven') {
+														echo "";
+													} else if (!empty($loop['zone_id']) AND $loop['zone_id'] != 1 AND $loop['zone_id'] !== 'logintiktok') {
+														echo "";
+													} else if (!empty($loop['zone_id']) AND $loop['zone_id'] != 1 AND $loop['zone_id'] !== 'logintower') {
+														echo "";
+													} else if (!empty($loop['zone_id']) AND $loop['zone_id'] != 1 AND $loop['zone_id'] !== 'loginwildrift') {
+														echo "";
+													} else if (!empty($loop['zone_id']) AND $loop['zone_id'] != 1 AND $loop['zone_id'] !== 'tournament') {
+														echo "";
+
+													} else {
+															echo $loop['user_id'];
+													}
+													?>
+												</td>
+												<td><?= $loop['method']; ?></td>
+												<td><?= $loop['provider']; ?></td>
+												<td><?= $loop['status']; ?></td>
+												<td>
+													<a href="<?= base_url(); ?>/admin/pesanan/edit/<?= $loop['id']; ?>" class="btn btn-primary btn-sm">Edit</a>
+													<button type="button" onclick="hapus('<?= base_url(); ?>/admin/pesanan/delete/<?= $loop['id']; ?>');" class="btn btn-danger btn-sm">Hapus</button>
+												</td>
+											</tr>
+											<?php endforeach ?>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<?php $this->endSection(); ?>
+				
+				<?php $this->section('js'); ?>
+				<div class="modal fade" id="modal-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				    <div class="modal-dialog" role="document">
+				        <div class="modal-content" style="background: var(--warna_2);">
+				            <div class="modal-header">
+				                <h5 class="modal-title" id="exampleModalLabel">Detail Pesanan</h5>
+				                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				                    <span aria-hidden="true">&times;</span>
+				                </button>
+				            </div>
+				            <div class="modal-body p-0">
+				            	
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<script>
+					function detail(order_id) {
+						$.ajax({
+							url: '<?= base_url(); ?>/admin/pesanan/detail/' + order_id,
+							success: function(result) {
+								$("#modal-detail div div .modal-body").html(result);
+
+								$("#modal-detail").modal('show');
+							}
+						});
+					}
+				</script>
+				<?php $this->endSection(); ?>
