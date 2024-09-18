@@ -61,7 +61,7 @@ class Home extends BaseController
         ]);
 
 
-        return view('/pages/Home/index', $data);
+        return view('/Home/index', $data);
     }
     public function search()
     {
@@ -99,3 +99,45 @@ class Home extends BaseController
         echo $searchResultsHtml;
     }
 }
+
+
+
+//   public function banner($action = null, $id = null)
+// {
+
+//     if ($this->admin == false) {
+//         $this->session->setFlashdata('error', 'Silahkan login dahulu');
+//         return redirect()->to(base_url() . '/admin/login');
+//     } else if ($action === 'delete') {
+//         if (is_numeric($id)) {
+//             $this->M_Base->data_delete('banner', $id);
+
+//             $this->session->setFlashdata('success', 'Banner berhasil dihapus');
+//             return redirect()->to(base_url() . '/admin/konfigurasi');
+//         } else {
+//             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+//         }
+//     } else {
+//         throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+//     }
+// }
+
+// public function flashsale($action = null, $id = null)
+// {
+
+//     if ($this->admin == false) {
+//         $this->session->setFlashdata('error', 'Silahkan login dahulu');
+//         return redirect()->to(base_url() . '/admin/login');
+//     } else if ($action === 'delete') {
+//         if (is_numeric($id)) {
+//             $this->M_Base->data_delete('flashsale', $id);
+
+//             $this->session->setFlashdata('success', 'flashsale berhasil dihapus');
+//             return redirect()->to(base_url() . '/admin/konfigurasi');
+//         } else {
+//             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+//         }
+//     } else {
+//         throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+//     }
+// }

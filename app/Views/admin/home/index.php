@@ -4,6 +4,9 @@
 <?php $this->endSection(); ?>
 
 <?php $this->section('content'); ?>
+
+
+
 <div class="content" style="min-height: 580px;">
     <div class="container">
         <div class="row">

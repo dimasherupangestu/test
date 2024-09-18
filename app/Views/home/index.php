@@ -2092,6 +2092,37 @@
 
 <?php $this->section('content'); ?>
 
+<?php if ($popup['status'] == 'On'): ?>
+    <div class="modal fade" id="PopUpText" tabindex="-1" role="dialog" aria-labelledby="PopUpTextTitle" aria-hidden="true"
+        style="z-index: 99999; margin-top: -35px;">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="justify-content:center">
+            <div class="modal-content shadow-lg" style="background-color: #fff; width:80%; border-radius:18px">
+                <div class="btn-close-popup" style="text-align:right">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="border:0;background: #fff;color: red; width:10%; justify-content:flex-end; border-radius:100px"><i class="fa fa-times text-red" aria-hidden="true" style="font-size:1.3rem; margin-top:10px; "></i></button>
+                </div>
+                <div class="modal-body text-white" style="font-size: 13px; padding:.75rem !important">
+                    <?php if (!empty($popup['image']) && $popup['image'] !== '-'): ?>
+                        <img onerror="this.style.display='none'" src="<?= base_url(); ?>/assets/images/<?= $popup['image']; ?>"
+                            width="100%" class="text-center img-fluid" style="border-radius: 5px;margin-bottom:20px">
+                    <?php endif; ?>
+                </div>
+                <?php if ($users === false): ?>
+                    <div class="modal-footer" style="justify-content:center !important">
+                        <div class="popup-bt">
+                            <a href="<?= base_url(); ?>/login">
+                                <button type="button" class="login-bt">Login</button>
+                            </a>
+                            <a href="<?= base_url(); ?>/register">
+                                <button type="button" class="signup-bt">Daftar</button>
+                            </a>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+<?php endif ?>
+
 
 <div class="mb-4" style="padding-top: 10px;margin-bottom: 1rem !important;">
     <div class="pt-0" style="">
@@ -2120,12 +2151,12 @@
 </div>
 
 <!-- flashsale -->
-<div class="container my-3">
+<div class="container mb-3 mt-3">
+
     <div class="flashsale-title">
-        <img src="<?= base_url('/assets/images/flashsale-part-3.png'); ?>" alt="fles">
+        <img src="<?= base_url(); ?>/assets/images/flashsale-part-3.png">
         <h5 style="display: inline-block;" id="expired_time_flash_sale" class="countdown-time"></h5>
     </div>
-
     <div class="swiper-container two">
         <div class="swiper-wrapper">
             <?php foreach ($flashsale as $flashsales) : ?>
@@ -2170,9 +2201,12 @@
                     </div>
                 </div>
             <?php endforeach; ?>
+
         </div>
-        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
     </div>
+    <div class="swiper-pagination"></div>
 </div>
 <!-- end flashsale -->
 
@@ -2289,7 +2323,7 @@
                                     <?php if ($loop['category'] == 'Influencer' && $loop['status'] == 'On'): ?>
                                         <div class="infl-body-item">
                                             <div style="margin-bottom: 0px;" class="card-infl">
-                                                <a href="<?= base_url(); ?>/games/<?= $loop['slug']; ?>">
+                                                <a href="<?= base_url(); ?>games/<?= $loop['slug']; ?>">
                                                     <img src="<?= base_url(); ?>/assets/images/games/<?= $loop['image']; ?>" class="img-infl" style="border-radius: 10px;">
                                                     <div data-v-16b318a8="" class="product-tile__clip-path-infl">
                                                         <img src="<?= base_url(); ?>/assets/images/favicon-hiddengame.png" alt="card-img" class="card-img">
@@ -2311,7 +2345,7 @@
                                     <?php if ($loop['category'] == 'Joki Rank' && $loop['status'] == 'On'): ?>
                                         <div class="infl-body-item">
                                             <div style="margin-bottom: 0px;" class="card-infl">
-                                                <a href="<?= base_url(); ?>/games/<?= $loop['slug']; ?>">
+                                                <a href="<?= base_url(); ?>games/<?= $loop['slug']; ?>">
                                                     <img src="<?= base_url(); ?>/assets/images/games/<?= $loop['image']; ?>" class="img-infl" style="border-radius: 10px;">
                                                     <div data-v-16b318a8="" class="product-tile__clip-path-infl">
                                                         <img src="<?= base_url(); ?>/assets/images/favicon-hiddengame.png" alt="card-img" class="card-img">
@@ -2332,7 +2366,7 @@
                             <?php if ($loop['status'] == 'On' && $loop['category'] != 'Influencer' && $game['category'] != 'Joki Rank'): ?>
                                 <div style="margin-bottom: 30px;display: flex;" class="col-sm-3 col-lg-2 col-4 text-center">
                                     <div class="card mb-3" style="">
-                                        <a href="<?= base_url(); ?>/games/<?= $loop['slug']; ?>" class="product_list">
+                                        <a href="<?= base_url(); ?>games/<?= $loop['slug']; ?>" class="product_list">
                                             <div style="margin-bottom: 0px;" class="card" bis_skin_checked="1">
                                                 <img src="<?= base_url(); ?>/assets/images/games/<?= $loop['image']; ?>"
                                                     class="img-fluid img-games" style="border-radius: 15px 15px 15px 15px; display: block;">
@@ -2431,7 +2465,7 @@
                             <?php if ($loop['status'] == 'On'): ?>
                                 <div style="margin-bottom: 30px;display: flex;" class="col-sm-3 col-lg-2 col-4 text-center">
                                     <div class="card mb-3 " style="">
-                                        <a href="<?= base_url(); ?>/games/<?= $loop['slug']; ?>" class="product_list">
+                                        <a href="<?= base_url(); ?>games/<?= $loop['slug']; ?>" class="product_list">
                                             <div style="margin-bottom: 0px;" class="card" bis_skin_checked="1">
                                                 <img src="<?= base_url(); ?>/assets/images/games/<?= $loop['image']; ?>"
                                                     class="img-fluid img-games" style="border-radius: 10px; display: block;">

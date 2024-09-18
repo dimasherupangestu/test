@@ -57,7 +57,12 @@ class M_Base extends Model
 
 	public function u_get($key)
 	{
-		return $this->db->table('utility')->where('u_key', $key)->get()->getResultArray()[0]['u_value'];
+		$resault =  $this->db->table('utility')->where('u_key', $key)->get()->getResultArray();
+		if ($resault) {
+			return $resault[0]['u_value'];
+		}
+
+		return null;
 	}
 
 
@@ -147,5 +152,20 @@ class M_Base extends Model
 	{
 		return $this->db->table('utility')->set(['u_value' => $value])->where('u_key', $key)->update();
 		// return $this->db->table('utility')->set(['u_value' => $value])->where('u_key', $key)->update();
+	}
+
+	public function join_table_2($primary_table, $secondary_table, $primary_key, $foreign_key, $select = '*', $where = null, $order_by = null)
+	{
+		$query = $this->db->table($primary_table);
+		$query->select($select);
+		$query->join($secondary_table, "{$primary_table}.{$primary_key} = {$secondary_table}.{$foreign_key}", 'left');
+
+		if ($where) {
+			$query->where($where);
+		}
+		if ($order_by) {
+			$query->orderBy($order_by);
+		}
+		return $query->get()->getResultArray();
 	}
 }
