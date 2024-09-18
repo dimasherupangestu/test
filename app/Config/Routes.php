@@ -61,11 +61,23 @@ $routes->match(['get', 'post'], '/admin/password', 'Admin\Home::password');
 // admin produk
 $routes->match(['get', 'post'], '/admin/produk', 'Admin\Produk::index');
 $routes->match(['get', 'post'], '/admin/produk/add', 'Admin\Produk::add');
-
-
 // admin postingan
 $routes->match(['get', 'post'], '/admin/postingan', 'Admin\Postingan::index');
 $routes->match(['get', 'post'], '/admin/postingan/edit/(:num)', 'Admin\Postingan::edit/$1');
+
+// admin voucer
+$routes->match(['get', 'post'], '/admin/voucher', 'Admin\Voucher::index');
+$routes->match(['get', 'post'], '/admin/voucher/add', 'Admin\Voucher::add');
+$routes->match(['get', 'post'], '/admin/voucher/edit/(:num)', 'Admin\Voucher::edit/$1');
+
+// admin konfigurasi
+$routes->match(['get', 'post'], '/admin/konfigurasi', 'Admin\Konfigurasi::index');
+
+
+
+
+
+
 /*
 
  * --------------------------------------------------------------------

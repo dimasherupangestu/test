@@ -142,4 +142,10 @@ class M_Base extends Model
 			return false;
 		}
 	}
+
+	public function u_update($key, $value)
+	{
+		return $this->db->table('utility')->set(['u_value' => $value])->where('u_key', $key)->update();
+		// return $this->db->table('utility')->set(['u_value' => $value])->where('u_key', $key)->update();
+	}
 }

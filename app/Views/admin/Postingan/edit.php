@@ -78,13 +78,6 @@
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
 
-    <?php if (session()->getFlashdata('error')): ?>
-        Swal.fire({
-            title: 'Gagal!',
-            text: '<?= session()->getFlashdata('error'); ?>',
-            icon: 'error',
-            confirmButtonText: 'OK'
-        });
-    <?php endif; ?>
+    
 </script>
 <?php $this->endSection(); ?>
