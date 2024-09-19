@@ -54,6 +54,21 @@ class M_Base extends Model
 		return $this->db->table($table)->where($field, $value)->get()->getResultArray();
 	}
 
+	public function data_orders_no_duplicate($table, ...$columns)
+	{
+		$builder = $this->db->table($table);
+
+		foreach ($columns as $column) {
+			$builder->select($column);
+		}
+
+		$firstColumn = array_shift($columns);
+		$builder->groupBy($firstColumn);
+
+		$query = $builder->get();
+
+		return $query->getResultArray();
+	}
 
 	public function u_get($key)
 	{
@@ -64,6 +79,7 @@ class M_Base extends Model
 
 		return null;
 	}
+
 
 
 	public function data_where_array($table, $data, $order = null)
@@ -167,5 +183,98 @@ class M_Base extends Model
 			$query->orderBy($order_by);
 		}
 		return $query->get()->getResultArray();
+	}
+
+	public function get_paginated_data_product($table, $search, $offset, $limit = null, $games = null, $provider = null, $status = null, $conditions = null)
+	{
+		// Inisialisasi query tanpa batasan
+		$query = $this->db->table($table . ' p');
+
+		// Jika ada kueri pencarian, tambahkan kondisi pencarian ke dalam kueri
+
+
+
+		// Menambahkan filter berdasarkan kondisi yang diberikan
+		if (!empty($conditions) && is_array($conditions)) {
+			foreach ($conditions as $column => $value) {
+				$query->where('p.' . $column, $value);
+			}
+		}
+
+		if ($table === 'product') {
+			$query->join('games g', 'p.games_id = g.id', 'left'); // Gunakan left join agar data 'product' yang tidak cocok tetap terpanggil
+			$query->select('p.*, g.games');
+			$query->where('p.games_id IS NOT NULL AND g.id IS NOT NULL'); // Memeriksa kesesuaian antara games_id dan id
+			$query->orderBy('g.games', 'ASC'); // Mengurutkan berdasarkan kolom 'games' dari tabel 'games'
+			$query->orderBy('p.sort', 'ASC');
+		}
+
+		if (!empty($search)) {
+			// Mendapatkan daftar kolom dalam tabel
+			$tableColumns = $this->db->getFieldNames($table);
+
+			// Membangun kondisi pencarian untuk setiap kolom
+			$query->groupStart();
+			foreach ($tableColumns as $column) {
+				$query->orLike('p.' . $column, $search);
+			}
+			$query->groupEnd();
+		}
+
+		if (!empty($games)) {
+			$query->where('p.games_id', $games);
+		}
+
+		if (!empty($provider)) {
+			$query->where('p.provider', $provider);
+		}
+
+		if (!empty($status)) {
+			$query->where('p.status', $status);
+		}
+
+		// Menghitung total data sesuai dengan kondisi pencarian
+		$totalRows = $query->countAllResults(false);
+
+		// Batasi hasil sesuai dengan offset dan limit jika limit diberikan
+		if (!is_null($limit)) {
+			$query->orderBy('p.id', 'DESC')->limit($limit, $offset);
+		}
+
+		// Dapatkan data sesuai dengan kondisi pencarian
+		$result = $query->get()->getResultArray();
+
+		return array(
+			'total' => $totalRows,
+			'rows' => $result
+		);
+	}
+	public function getAllGames($search = '', $limit = 10, $offset = 0, $sort = 'games', $order = 'asc')
+	{
+		$builder = $this->db->table('games');
+		$builder->select('*');
+
+		if ($search != '') {
+			$builder->like('games', $search);
+			$builder->orLike('category', $search);
+		}
+
+		$builder->limit($limit, $offset);
+		$builder->orderBy($sort, $order);
+
+		return $builder->get()->getResultArray();
+	}
+
+	public function countAllGames($search = '')
+	{
+		$builder = $this->db->table('games');
+		$builder->select('COUNT(id) as total');
+
+		if ($search != '') {
+			$builder->like('games', $search);
+			$builder->orLike('category', $search);
+		}
+
+		return $builder->get()->getRow()->total;
 	}
 }

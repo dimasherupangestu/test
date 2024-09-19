@@ -73,7 +73,11 @@ $routes->match(['get', 'post'], '/admin/voucher/edit/(:num)', 'Admin\Voucher::ed
 // admin konfigurasi
 $routes->match(['get', 'post'], '/admin/konfigurasi', 'Admin\Konfigurasi::index');
 $routes->match(['get', 'post'], '/admin/konfigurasi/flashsale/edit/(:num)', 'Admin\Konfigurasi::edit/$1');
-
+// admin produk
+$routes->match(['get', 'post'], '/admin/produk', 'Admin\Produk::index');
+$routes->match(['get', 'post'], '/admin/produk/add', 'Admin\Produk::add');
+$routes->match(['get', 'post'], '/admin/produk/edit/(:num)', 'Admin\Produk::edit/$1');
+$routes->match(['get', 'post'], '/admin/produk/delete/(:num)', 'Admin\Produk::delete/$1');
 
 
 

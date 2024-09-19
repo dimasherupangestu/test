@@ -264,6 +264,7 @@ class Konfigurasi extends BaseController
             $this->session->setFlashdata('error', 'Anda tidak diizinkan mengakses halaman ini');
             return redirect()->to(base_url() . 'admin/hello');
         } else {
+
             $post = $this->M_Base->data_where('flashsale', 'id', $id);
 
             if (!empty($post)) {
@@ -273,6 +274,19 @@ class Konfigurasi extends BaseController
                         'games_id' => $this->request->getPost('games_id'),
                         'product_id' => $this->request->getPost('product_id'),
                     ];
+
+                    $data_flashsale = [
+                        'limitflashsale' => $this->request->getPost('limitflashsale')
+                    ];
+
+                    $data_flashsale_part = [
+                        'flashsale_part' => $this->request->getPost('flashsale_part')
+                    ];
+
+                    $productModel = new ProductModel();
+                    $productModel->update($data_post['product_id'], ['limitflashsale' => $data_flashsale['limitflashsale']]);
+                    $productModel->update($data_post['product_id'], ['flashsale_part' => $data_flashsale_part['flashsale_part']]);
+
 
                     // Validasi Input
                     if (empty($data_post['title'])) {
@@ -312,7 +326,6 @@ class Konfigurasi extends BaseController
                 return redirect()->to(base_url() . 'admin/konfigurasi');
             }
 
-            // Tampilkan Form Edit
             $data = array_merge($this->base_data, [
                 'title' => 'Edit Postingan',
                 'post' => $post[0],
