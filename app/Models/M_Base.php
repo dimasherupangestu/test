@@ -249,32 +249,28 @@ class M_Base extends Model
 			'rows' => $result
 		);
 	}
-	public function getAllGames($search = '', $limit = 10, $offset = 0, $sort = 'games', $order = 'asc')
+
+
+	public function getAllGames($search = '', $limit = null, $offset = 0, $sort = 'games', $order = 'asc')
 	{
 		$builder = $this->db->table('games');
-		$builder->select('*');
-
-		if ($search != '') {
+		if (!empty($search)) {
 			$builder->like('games', $search);
-			$builder->orLike('category', $search);
 		}
-
-		$builder->limit($limit, $offset);
-		$builder->orderBy($sort, $order);
-
-		return $builder->get()->getResultArray();
+		// Hitung jumlah produk untuk setiap game
+		$builder->select('games.*, (SELECT COUNT(*) FROM product WHERE games_id = games.id) AS product');
+		return $builder->orderBy($sort, $order)->limit($limit, $offset)->get()->getResultArray();
 	}
+
 
 	public function countAllGames($search = '')
 	{
 		$builder = $this->db->table('games');
-		$builder->select('COUNT(id) as total');
 
-		if ($search != '') {
+		if (!empty($search)) {
 			$builder->like('games', $search);
-			$builder->orLike('category', $search);
 		}
 
-		return $builder->get()->getRow()->total;
+		return $builder->countAllResults(); // Return total count of games
 	}
 }

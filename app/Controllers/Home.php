@@ -98,4 +98,31 @@ class Home extends BaseController
         }
         echo $searchResultsHtml;
     }
+
+    public function load_more()
+    {
+        $page = $this->request->getPost('page');
+        $limit = 10; // Batas data per halaman
+        $offset = ($page - 1) * $limit;
+
+        // Ambil data game dari database sesuai offset dan limit
+        $games = $this->gameModel->getGames($limit, $offset); // Sesuaikan dengan modelmu
+
+        // Tampilkan data game dalam bentuk view tanpa layout
+        foreach ($games as $game) {
+            if ($game['status'] == 'On') {
+                echo '
+                <div style="margin-bottom: 30px;display: flex;" class="col-sm-3 col-lg-2 col-4 text-center">
+                    <div class="card mb-3" style="">
+                        <a href="' . base_url() . 'games/' . $game['slug'] . '" class="product_list">
+                            <div style="margin-bottom: 0px;" class="card">
+                                <img src="' . base_url() . '/assets/images/games/' . $game['image'] . '" class="img-fluid img-games" style="border-radius: 15px;">
+                                <div class="card-title2" style="font-weight:bold;">' . $game['games'] . '</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>';
+            }
+        }
+    }
 }

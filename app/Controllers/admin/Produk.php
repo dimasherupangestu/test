@@ -197,133 +197,6 @@ class Produk extends BaseController
     }
 
 
-    public function vocagametable()
-    {
-
-        if ($this->admin == false) {
-            $this->session->setFlashdata('error', 'Silahkan login dahulu');
-            return redirect()->to(base_url() . '/admin/login');
-        }
-
-        $product = [];
-        foreach ($this->M_Base->all_data('product') as $loop) {
-            $games = $this->M_Base->data_where('games', 'id', $loop['games_id']);
-
-            $nama_games = count($games) == 1 ? $games[0]['games'] : '-';
-
-            $product[] = array_merge($loop, [
-                'games' => $nama_games,
-            ]);
-        }
-
-
-        $categoriesData = $this->M_Base->get_categories_data_voca();
-
-        $data = array_merge($this->base_data, [
-            'title' => 'Produk Vocagame',
-            'product' => $product,
-            'games' => $this->M_Base->data_orders_no_duplicate('games', 'games', 'id'),
-            'gameslg' => $this->M_Base->all_data_asc_games('games'),
-            'categoriesData' => $categoriesData,
-        ]);
-
-        return view('Admin/Produk/vocagametable', $data);
-    }
-
-    public function addprodukapi_voca()
-    {
-
-        if ($this->admin == false) {
-            $this->session->setFlashdata('error', 'Silahkan login dahulu');
-            return redirect()->to(base_url() . '/admin/login');
-        }
-
-        // Ambil data dari request POST
-        $game_id = $this->request->getPost('game_id');
-        $product = $this->request->getPost('product');
-        $sku = $this->request->getPost('sku');
-        $product_id = $this->request->getPost('productid');
-        $price = $this->request->getPost('price');
-
-        // Siapkan data untuk disisipkan ke dalam database
-        $dataToInsert = [
-            'games_id' => $game_id,
-            'product' => $product,
-            'product_id' => $product_id,
-            'sku' => $sku,
-            'status' => 'On',
-            'provider' => 'VG',
-            'raw_price' => $price,
-            'price' => $price * 1.05,
-            'price_silver' => $price * 1.02,
-            'price_gold' => $price * 1.01,
-        ];
-
-        // Sisipkan data ke database
-        $this->M_Base->data_insert('product', $dataToInsert);
-
-        // Kirim respons sukses
-        return $this->response->setJSON(['success' => true]);
-    }
-
-    public function get_products_data_voca()
-    {
-        if ($this->admin == false) {
-            $this->session->setFlashdata('error', 'Silahkan login dahulu');
-            return redirect()->to(base_url() . '/admin/login');
-        }
-
-        $search = $_GET['search'] ?? '';
-        $offset = $_GET['offset'] ?? 0;
-        $limit = $_GET['limit'] ?? 10;
-        $games = $_GET['games'] ?? '1';
-
-        $products = $this->M_Base->get_paginated_api_data_voca($games, $search, $offset, $limit);
-
-        $tableData = $products['rows'];
-        usort($tableData, [$this->M_Base, 'sort_product_api']);
-
-        $totalRows = $products['total'];
-
-        $data = array();
-        foreach ($tableData as $index => $product) {
-            $criteria = array('sku' => $product['id'], 'provider' => 'VG');  // Menggunakan 'code' dari API sebagai SKU
-            $local_product_data = $this->M_Base->data_where_array('product', $criteria);
-
-            // Menentukan apakah produk sudah ada di database lokal
-            $is_added = count($local_product_data) >= 1 ? 'Y' : 'N';
-
-            $data[$index] = array(
-                'no' => $index + 1,
-                'product' => $product['name'],
-                'sku' => $product['id'],
-                'status' => $product['isActive'],
-                'provider' => $product['provider_code'],
-                'price' => 'Rp ' . number_format($product['price'], 0, ',', '.'),
-                'added' => $is_added,
-            );
-        }
-        $response = array(
-            'total' => $totalRows,
-            'rows' => $data
-        );
-
-        header('Content-Type: application/json');
-        echo json_encode($response);
-    }
-
-    public function insert_pergames_product_voca()
-    {
-        if ($this->admin == false) {
-            $this->session->setFlashdata('error', 'Silahkan login dahulu');
-            return redirect()->to(base_url() . '/admin/login');
-        }
-
-        $gamesvoca = $this->request->getPost('gamesvoca');
-        $gamesdb = $this->request->getPost('gamesdb');
-
-        $this->M_Base->insert_massal_Product_voca($gamesvoca, $gamesdb);
-    }
 
     public function category($page = null, $id = null)
     {
@@ -467,6 +340,181 @@ class Produk extends BaseController
         }
     }
 
+
+    public function get()
+    {
+        if ($this->admin['level'] == 'Customer Service') {
+            $this->session->setFlashdata('error', 'Anda tidak memiliki akses untuk melihat halaman ini.');
+            return redirect()->to(base_url() . '/hello');
+        }
+
+        if ($this->admin == false) {
+            $this->session->setFlashdata('error', 'Silahkan login dahulu');
+            return redirect()->to(base_url() . '/admin/login');
+        }
+
+        $this->M_Base->post(base_url() . '/sistem/product', []);
+
+        $this->session->setFlashdata('success', 'Produk berhasil diget, silahkan tunggu 5-10 detik lalu refresh');
+        return redirect()->to(base_url() . '/admin/produk');
+    }
+
+    public function getbj()
+    {
+
+        if ($this->admin == false) {
+            $this->session->setFlashdata('error', 'Silahkan login dahulu');
+            return redirect()->to(base_url() . '/admin/login');
+        }
+
+        $this->M_Base->post(base_url() . '/sistem/productbj', []);
+
+        $this->session->setFlashdata('success', 'Produk berhasil diget, silahkan tunggu 5-10 detik lalu refresh');
+        return redirect()->to(base_url() . '/admin/produk');
+    }
+
+    public function rawprice()
+    {
+
+        if ($this->admin == false) {
+            $this->session->setFlashdata('error', 'Silahkan login dahulu');
+            return redirect()->to(base_url() . '/admin/login');
+        }
+
+        $this->M_Base->post(base_url() . '/sistem/rawprice', []);
+
+        $this->session->setFlashdata('success', 'Harga Raw berhasil di update, silahkan tunggu 5-10 detik lalu refresh');
+        return redirect()->to(base_url() . '/admin/produk');
+    }
+
+
+
+    public function vocagametable()
+    {
+
+        if ($this->admin == false) {
+            $this->session->setFlashdata('error', 'Silahkan login dahulu');
+            return redirect()->to(base_url() . '/admin/login');
+        }
+
+        $product = [];
+        foreach ($this->M_Base->all_data('product') as $loop) {
+            $games = $this->M_Base->data_where('games', 'id', $loop['games_id']);
+
+            $nama_games = count($games) == 1 ? $games[0]['games'] : '-';
+
+            $product[] = array_merge($loop, [
+                'games' => $nama_games,
+            ]);
+        }
+
+
+        $categoriesData = $this->M_Base->get_categories_data_voca();
+
+        $data = array_merge($this->base_data, [
+            'title' => 'Produk Vocagame',
+            'product' => $product,
+            'games' => $this->M_Base->data_orders_no_duplicate('games', 'games', 'id'),
+            'gameslg' => $this->M_Base->all_data_asc_games('games'),
+            'categoriesData' => $categoriesData,
+        ]);
+
+        return view('Admin/Produk/vocagametable', $data);
+    }
+
+    public function addprodukapi_voca()
+    {
+
+        if ($this->admin == false) {
+            $this->session->setFlashdata('error', 'Silahkan login dahulu');
+            return redirect()->to(base_url() . '/admin/login');
+        }
+
+        // Ambil data dari request POST
+        $game_id = $this->request->getPost('game_id');
+        $product = $this->request->getPost('product');
+        $sku = $this->request->getPost('sku');
+        $product_id = $this->request->getPost('productid');
+        $price = $this->request->getPost('price');
+
+        // Siapkan data untuk disisipkan ke dalam database
+        $dataToInsert = [
+            'games_id' => $game_id,
+            'product' => $product,
+            'product_id' => $product_id,
+            'sku' => $sku,
+            'status' => 'On',
+            'provider' => 'VG',
+            'raw_price' => $price,
+            'price' => $price * 1.05,
+            'price_silver' => $price * 1.02,
+            'price_gold' => $price * 1.01,
+        ];
+
+        // Sisipkan data ke database
+        $this->M_Base->data_insert('product', $dataToInsert);
+
+        // Kirim respons sukses
+        return $this->response->setJSON(['success' => true]);
+    }
+
+    public function get_products_data_voca()
+    {
+        if ($this->admin == false) {
+            $this->session->setFlashdata('error', 'Silahkan login dahulu');
+            return redirect()->to(base_url() . '/admin/login');
+        }
+
+        $search = $_GET['search'] ?? '';
+        $offset = $_GET['offset'] ?? 0;
+        $limit = $_GET['limit'] ?? 10;
+        $games = $_GET['games'] ?? '1';
+
+        $products = $this->M_Base->get_paginated_api_data_voca($games, $search, $offset, $limit);
+
+        $tableData = $products['rows'];
+        usort($tableData, [$this->M_Base, 'sort_product_api']);
+
+        $totalRows = $products['total'];
+
+        $data = array();
+        foreach ($tableData as $index => $product) {
+            $criteria = array('sku' => $product['id'], 'provider' => 'VG');  // Menggunakan 'code' dari API sebagai SKU
+            $local_product_data = $this->M_Base->data_where_array('product', $criteria);
+
+            // Menentukan apakah produk sudah ada di database lokal
+            $is_added = count($local_product_data) >= 1 ? 'Y' : 'N';
+
+            $data[$index] = array(
+                'no' => $index + 1,
+                'product' => $product['name'],
+                'sku' => $product['id'],
+                'status' => $product['isActive'],
+                'provider' => $product['provider_code'],
+                'price' => 'Rp ' . number_format($product['price'], 0, ',', '.'),
+                'added' => $is_added,
+            );
+        }
+        $response = array(
+            'total' => $totalRows,
+            'rows' => $data
+        );
+
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
+    public function insert_pergames_product_voca()
+    {
+        if ($this->admin == false) {
+            $this->session->setFlashdata('error', 'Silahkan login dahulu');
+            return redirect()->to(base_url() . '/admin/login');
+        }
+
+        $gamesvoca = $this->request->getPost('gamesvoca');
+        $gamesdb = $this->request->getPost('gamesdb');
+
+        $this->M_Base->insert_massal_Product_voca($gamesvoca, $gamesdb);
+    }
     public function markupharga()
     {
         if ($this->admin == false) {
@@ -536,53 +584,5 @@ class Produk extends BaseController
         ]);
 
         return view('Admin/Produk/markupharga', $data);
-    }
-
-
-
-    public function get()
-    {
-        if ($this->admin['level'] == 'Customer Service') {
-            $this->session->setFlashdata('error', 'Anda tidak memiliki akses untuk melihat halaman ini.');
-            return redirect()->to(base_url() . '/hello');
-        }
-
-        if ($this->admin == false) {
-            $this->session->setFlashdata('error', 'Silahkan login dahulu');
-            return redirect()->to(base_url() . '/admin/login');
-        }
-
-        $this->M_Base->post(base_url() . '/sistem/product', []);
-
-        $this->session->setFlashdata('success', 'Produk berhasil diget, silahkan tunggu 5-10 detik lalu refresh');
-        return redirect()->to(base_url() . '/admin/produk');
-    }
-
-    public function getbj()
-    {
-
-        if ($this->admin == false) {
-            $this->session->setFlashdata('error', 'Silahkan login dahulu');
-            return redirect()->to(base_url() . '/admin/login');
-        }
-
-        $this->M_Base->post(base_url() . '/sistem/productbj', []);
-
-        $this->session->setFlashdata('success', 'Produk berhasil diget, silahkan tunggu 5-10 detik lalu refresh');
-        return redirect()->to(base_url() . '/admin/produk');
-    }
-
-    public function rawprice()
-    {
-
-        if ($this->admin == false) {
-            $this->session->setFlashdata('error', 'Silahkan login dahulu');
-            return redirect()->to(base_url() . '/admin/login');
-        }
-
-        $this->M_Base->post(base_url() . '/sistem/rawprice', []);
-
-        $this->session->setFlashdata('success', 'Harga Raw berhasil di update, silahkan tunggu 5-10 detik lalu refresh');
-        return redirect()->to(base_url() . '/admin/produk');
     }
 }

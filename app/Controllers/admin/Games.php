@@ -47,33 +47,23 @@ class Games extends \App\Controllers\BaseController
 
         return view('Admin/Games/index', $data);
     }
-
     public function getData()
     {
         $limit = $this->request->getGet('limit');
         $offset = $this->request->getGet('offset') ?? 0;
-        $search = $this->request->getGet('search') ?? '';
+        $search = $this->request->getGet('search') ?? ''; // Get search query
         $sort = $this->request->getGet('sort') ?? 'games';
         $order = $this->request->getGet('order') ?? 'asc';
 
-        // Query ke database untuk mendapatkan games dengan pencarian
+        // Ambil data dari model dengan filter pencarian
         $games = $this->M_Base->getAllGames($search, $limit, $offset, $sort, $order);
 
-        // Total data dengan pencarian
-        $total = $this->M_Base->countAllGames($search);
-
-        // Format response JSON
-        $data = [
-            'total' => $total,
+        // Set response
+        return $this->response->setJSON([
             'rows' => $games,
-        ];
-
-        return $this->response->setJSON($data);
+            'total' => $this->M_Base->countAllGames($search), // Update count to consider search
+        ]);
     }
-
-
-
-
 
 
     public function delete($id = null)

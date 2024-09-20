@@ -17,7 +17,6 @@
 							<div class="card-body">
 								<h5 class="mb-3">Edit Produk</h5>
 
-
 								<form action="" method="POST" enctype="multipart/form-data">
 									<div class="form-group row">
 										<label class="col-form-label col-md-4 text-white">Games</label>

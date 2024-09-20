@@ -6,10 +6,19 @@
 <?php $this->section('content'); ?>
 <div class="content">
     <div class="container">
+        <?php if (session()->getFlashdata('error')) : ?>
+            <div class="alert alert-danger">
+                <?= session()->getFlashdata('error') ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if (session()->getFlashdata('success')) : ?>
+            <div class="alert alert-success">
+                <?= session()->getFlashdata('success') ?>
+            </div>
+        <?php endif; ?>
         <div class="row">
             <div class="col-md-12">
-
-
                 <div class="card">
                     <div class="card-body">
                         <h5 class="mb-3">Umum</h5>
