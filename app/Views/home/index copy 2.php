@@ -6,88 +6,6 @@
 
 <?php $this->section('content'); ?>
 
-
-<div class="mb-4" style="padding-top: 10px;margin-bottom: 1rem !important;">
-    <div class="pt-0" style="">
-        <div class="container banner-pad">
-            <div class="loader">
-                <span></span><span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span><span></span>
-            </div>
-            <!-- Skeleton Loading Banner -->
-            <div class="banner-skeleton">
-                <!-- Placeholder gambar atau teks -->
-            </div>
-            <div class="rev_slider">
-                <?php $no = 1;
-                foreach ($banner as $loop): ?>
-                    <a class="rev_slide" href="<?= $loop['url']; ?>">
-                        <img style="border-radius: 16px;" class="d-block w-100 test"
-                            src="<?= base_url(); ?>/assets/images/banner/<?= $loop['image']; ?>" alt="First slide">
-                    </a>
-                <?php $no++;
-                endforeach ?>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container mb-3 mt-3">
-    <div class="flashsale-title">
-        <img src="<?= base_url(); ?>/assets/images/flashsale-part-3.png">
-        <h5 style="display: inline-block;" id="expired_time_flash_sale" class="countdown-time"></h5>
-    </div>
-    <div class="swiper-container two">
-        <div class="swiper-wrapper">
-            <?php foreach ($flashsale as $flashsales) : ?>
-                <div class="swiper-slide slide-container <?= ($flashsales['limitflashsale'] == 0) ? 'sold-out' : ''; ?>" id="flashsale_card_<?= $flashsales['id']; ?>">
-                    <div class="slide-content">
-                        <?php if ($flashsales['limitflashsale'] > 0) : ?>
-                            <a href="<?= base_url() . '/games/' . $flashsales['game_slug'] . '?diamonds=' . $flashsales['product_id'] . '#' . $flashsales['product_id']; ?>" class="product-link">
-                            <?php else : ?>
-                                <a class="product-link">
-                                <?php endif; ?>
-
-                                <!-- Konten slide -->
-                                <div style="background: linear-gradient(180deg, rgba(0,0,0,.00) 0%, #000), url(<?= base_url(); ?>/assets/images/flashsale/<?= $flashsales['image']; ?>);background-size: cover;" alt="slide <?= $no; ?>" class="card-flashsale">
-                                    <div class="row swiper-wrapper">
-                                        <img src="<?= base_url(); ?>/assets/images/games/<?= $flashsales['game_image']; ?>" alt="flashsales <?= $title; ?> <?= $flashsales['title']; ?>" class="mb-2 img-games-fs" style="display: block; border-radius: 999px !important;object-position: left;border: 1px solid #fff; margin-left:10px">
-                                        <p class="games-title-fs"> <?= $flashsales['game_game']; ?></p>
-                                    </div>
-                                    <div style="background: linear-gradient(45deg, rgba(140, 191, 75, 0.7), rgba(76, 146, 30, 0.7), rgba(34, 116, 0, 0.7))" alt="slide <?= $no; ?>" class="card-flashsale-bottom">
-                                        <div class="col-12 pb-2 justify-between flex-col d-flex">
-                                            <img src="<?= base_url(); ?>/assets/images/favicon-hiddengame.png" alt="card-img" class="card-img-fs" style="position:absolute; width:30%; right:-10px; opacity:0.5">
-                                            <p class="produk-flash-sale"><?= $flashsales['title']; ?></p>
-                                            <div class="bg-flashsale-up">
-                                                <p class="price-cor-fs">Rp <?= number_format($flashsales['discount_price'], 0, ',', '.'); ?></p>
-                                            </div>
-                                            <div class="bg-flashsale-down">
-                                                <p class="price-fs" style="color:#EFFF39">Rp <?= number_format($flashsales['price'], 0, ',', '.'); ?></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="diskon-flashsale <?= ($flashsales['limitflashsale'] > 0) ? 'show-animation' : ''; ?>">
-                                    <span class="limit-text" style="color:#fff;">
-                                        <?php if ($flashsales['limitflashsale'] > 0) : ?>
-                                            Tersisa : <span class="fire-effect"><?= $flashsales['limitflashsale']; ?> </span>
-                                        <?php else : ?>
-                                            Sold Out !
-                                        <?php endif; ?>
-                                    </span>
-                                </div>
-                                </a>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-    </div>
-    <div class="swiper-pagination"></div>
-</div>
-
 <div class="container">
     <div class="PB-5 pt-5" style="border-radius: 10px;padding: 10px; overflow: hidden;margin-top: -50px;">
         <ul class="nav nav-pills tab-category gap-2 pb-2" id="pills-tab" role="tablist"
@@ -232,11 +150,10 @@
                             </div>
                         </div>
 
-
                         <!-- Start Game -->
 
                         <?php foreach ($game['games'] as $loop): ?>
-                            <?php if ($loop['status'] == 'On' && $loop['category'] != 'Influencer' && $game['category'] != 'Joki Rank'): ?>
+                            <?php if ($loop['status'] == 'On' && $loop['category'] != 'Influencer' && $game['category'] != 'Joki Rank' && $game['category'] != 'Games'): ?>
                                 <div style="margin-bottom: 30px;display: flex;" class="col-sm-3 col-lg-2 col-4 text-center">
                                     <div class="card mb-3" style="">
                                         <a href="<?= base_url(); ?>/games/<?= $loop['slug']; ?>" class="product_list">
@@ -261,9 +178,45 @@
                                 </div>
                             <?php endif ?>
                         <?php endforeach ?>
-
                         <!-- End Of Game -->
 
+                        <!-- Start Load more -->
+                        <?php if ($game['category'] === 'Games'): ?>
+                            <div class="row game" id="gamesContainer">
+                                <?php foreach ($game['games'] as $loop): ?>
+                                    <?php if ($loop['status'] == 'On' && $loop['category'] != 'Influencer' && $game['category'] != 'Joki Rank' && $game['category'] != 'Games Populer'): ?>
+                                        <div style="margin-bottom: 30px;display: flex;" class="col-sm-3 col-lg-2 col-4 text-center">
+                                            <div class="card mb-3" style="">
+                                                <a href="<?= base_url(); ?>games/<?= $loop['slug']; ?>" class="product_list">
+                                                    <div style="margin-bottom: 0px;" class="card" bis_skin_checked="1">
+                                                        <img src="<?= base_url(); ?>/assets/images/games/<?= $loop['image']; ?>" class="img-fluid img-games" style="border-radius: 15px 15px 15px 15px; display: block;">
+                                                        <?php if (!empty($loop['discount']) && $loop['discount'] !== '0'): ?>
+                                                            <div class="diskon">-<?= $loop['discount']; ?>%</div>
+                                                        <?php endif; ?>
+                                                        <div data-v-16b318a8="" class="product-tile__clip-path">
+                                                            <img src="<?= base_url(); ?>/assets/images/favicon-hiddengame.png" alt="card-img" class="card-img">
+                                                            <div class="card-title2" style="font-weight:bold;" bis_skin_checked="1"><?= $loop['games']; ?></div>
+                                                        </div>
+                                                        <div class="card-subtitle" bis_skin_checked="1"></div>
+                                                        <div class="card-topup" bis_skin_checked="1" hidden>
+                                                            <div class="btn-topup" style="font-size: 0.60rem!important;" bis_skin_checked="1"> TOP UP </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    <?php endif ?>
+                                <?php endforeach ?>
+                            </div>
+                        <?php endif ?>
+                        <!-- End Load more And Show More -->
+                        <?php if ($game['category'] === 'Games'): ?>
+                            <div class="text-center mt-4">
+                                <!-- Ubah id button menjadi "showless" dan "loadmore" -->
+                                <button class="btn btn-secondary" id="showless" style="display:none;">Show Less</button>
+                                <button class="btn btn-primary" style="color: red;" id="loadmore">Load more</button>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -439,10 +392,7 @@
 
 <div class="container" style="padding-bottom: 100px;" hidden>
     <div data-v-3917c69b="" class="home__feeds-items">
-        <!---->
-        <!---->
-        <!---->
-        <!---->
+
         <div data-v-24b86abb="" data-v-3917c69b="" class="coda-about__container">
             <div data-v-24b86abb="" class="coda-about__content">
                 <h1 data-v-24b86abb="" class="coda-about__header"><?= $title; ?></h1>
@@ -558,7 +508,7 @@
                         <div class="card"
                             style="border:1px solid #4b4d50;background-color: #484d52;box-shadow:0px 0px 0px #e7e7e7 !important">
                             <div class="card-header">
-                                <h5 style="color: #fff;font-size:1.25rem">Perhatian !</h5>
+                                <h5 style="color: #fff;font-size;1.25rem">Perhatian !</h5>
                             </div>
                             <div class="card-body pb-1" style="background-color: #06142f !important">
                                 <div class="col-12" style="text-align:center">
@@ -644,6 +594,64 @@
 <?php $this->endSection(); ?>
 
 <?php $this->section('js'); ?>
+
+
+<script>
+    $(document).ready(function() {
+        let offset = <?= $limit; ?>;
+        let limit = 12;
+        let new_limit = limit - offset;
+
+        const category = 'Games'; // Anda dapat mengganti ini sesuai kebutuhan
+
+        $('#loadmore').click(function() {
+            $.ajax({
+                url: '<?= base_url('home/loadMoreGames') ?>',
+                method: 'POST',
+                data: {
+                    category: category,
+                    offset: offset
+                },
+                success: function(response) {
+                    // Append new games to the existing list
+                    $('#gamesContainer').append(response.html);
+                    // Update offset
+                    offset = response.new_offset;
+                    $('html, body').animate({
+                        scrollTop: $('#gamesContainer div.col-sm-3:last').offset().top
+                    }, 1000);
+                    // Check if end_of_games is true, hide the 'Load More' button if so
+                    if (response.end_of_games) {
+                        $('#loadmore').hide();
+                    }
+                    // Show 'Show Less' button
+                    $('#showless').show();
+                }
+            });
+        });
+
+        $('#showless').click(function() {
+            $.ajax({
+                url: '<?= base_url('home/showLessGames') ?>',
+                method: 'POST',
+                data: {
+                    category: category
+                },
+                success: function(response) {
+                    // console.log('res', response);
+                    $('#gamesContainer').html(response.html); // Ganti isi container dengan data awal
+                    offset = response.new_offset;
+                    $('html, body').animate({
+                        scrollTop: $('#gamesContainer').offset().top
+                    }, 1000);
+
+                    $('#loadmore').show(); // Tampilkan tombol Load More
+                    $('#showless').hide(); // Sembunyikan tombol Show Less
+                }
+            });
+        });
+    });
+</script>
 
 <script>
     const toggleModal3 = () => {
@@ -875,33 +883,69 @@
     });
 </script>
 
+<script>
+    // Get the button
+    var btn = document.getElementById("back-to-top");
+
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function() {
+        scrollFunction();
+    };
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            btn.style.display = "block";
+        } else {
+            btn.style.display = "none";
+        }
+    }
+
+    // When the user clicks on the button, scroll to the top of the document
+    btn.onclick = function() {
+        topFunction();
+    };
+
+    function topFunction() {
+        // Using smooth scroll method
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+</script>
+
 
 <script>
     $(document).ready(function() {
         var timeParsed = '<?= $expired; ?>'.replace(' ', 'T').split(/[^0-9]/);
-        var countDown = new Date(new Date(timeParsed[0], timeParsed[1] - 1, timeParsed[2], timeParsed[3], timeParsed[4], timeParsed[5])).getTime();
+        var countDown = new Date(new Date(timeParsed[0], timeParsed[1] - 1, timeParsed[2], timeParsed[3],
+            timeParsed[4], timeParsed[5])).getTime();
 
         var x = setInterval(() => {
             let nowTime = new Date().getTime();
+            // Find the distance between now and the count down date
             var distance = countDown - nowTime;
 
+            // Time calculations for days, hours, minutes and seconds
             var days = Math.floor(distance / (1000 * 60 * 60 * 24));
             var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
+            // Display the result in the element with id="demo"
             if (distance > 0) {
-                $("#expired_time_flash_sale").text(`${days}:${hours}:${minutes}:${seconds}`);
-            } else {
-                clearInterval(x);
-                $("#expired_time_flash_sale").text("Flash Sale Berakhir");
-                $(".swiper-slide").addClass("sold-out");
+                // document.getElementById("expired_time").innerHTML = `${minutes} minutes ${seconds} seconds`
+                $("#expired_time_flash_sale").text(`${days}:${hours}:${minutes}:${seconds}`)
             }
         }, 1000);
-    });
+
+        $("#paycode").tooltip();
+        $("#paycode").click(function() {
+            copyToClipboard($(this).text().trim().replace(".", ""), $(this));
+        })
+        $("#paycode").css('cursor', 'pointer');
+    })
 </script>
-
-
 <script>
     var swiper = new Swiper(".swiper-container.two", {
         loop: true,
@@ -945,280 +989,4 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- <script>
-$(document).ready(function() {
-    $("#searchInput").keyup(function() {
-        var searchQuery = $("#searchInput").val();
-        if (searchQuery.length >= 2) {
-            $.ajax({
-                type: "POST",
-                url: "<?php echo base_url(); ?>/home/search",
-                data: {
-                    searchQuery: searchQuery
-                },
-                success: function(data) {
-                    $("#searchResultsContainer").html(data);
-                }
-            });
-        } else {
-            $("#searchResultsContainer").empty();
-        }
-    });
-});
-</script>
-<script>
-const searchContainer = document.getElementById('searchResultsContainer');
-
-// Tambahkan event listener ke elemen dokumen
-document.addEventListener('click', function(event) {
-    // Cek apakah elemen yang diklik adalah bagian dari kontainer pencarian atau tidak
-    if (!searchContainer.contains(event.target)) {
-        // Jika tidak, sembunyikan kontainer pencarian
-        searchContainer.innerHTML = '';
-    }
-});
-</script> -->
-
-<!-- <script>
-        // Get the button
-        var btn = document.getElementById("back-to-top");
-
-        // When the user scrolls down 20px from the top of the document, show the button
-        window.onscroll = function() {
-            scrollFunction();
-        };
-
-        function scrollFunction() {
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                btn.style.display = "block";
-            } else {
-                btn.style.display = "none";
-            }
-        }
-
-        // When the user clicks on the button, scroll to the top of the document
-        btn.onclick = function() {
-            topFunction();
-        };
-
-        function topFunction() {
-            // Using smooth scroll method
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        }
-    </script>
-    
-<script> -->
-
-<script>
-    // let timerInterval;
-
-    // function showCountdownTimer(endHour) {
-    // const countdownContainer = document.getElementById('expired_time_flash_sale');
-    // countdownContainer.innerHTML = '';
-
-    // const countdownText = document.createElement('p');
-    // countdownText.classList.add('countdown-time');
-
-    // function setCountdownTimer() {
-    // const currentTime = new Date();
-    // const currentHour = currentTime.getHours();
-    // const currentMinute = currentTime.getMinutes();
-    // const currentSecond = currentTime.getSeconds();
-
-    // const end = new Date();
-    // end.setHours(endHour, 0, 0, 0);
-    // if (end < currentTime) {
-    // end.setDate(end.getDate() + 1); // Menambahkan satu hari jika waktu akhir sudah berlalu
-    // }
-
-
-    // let remainingTime;
-
-    // if (currentHour===endHour || (currentHour> endHour && currentHour < endHour + 8) || (currentHour===0 && currentMinute < 60 && endHour===17)) {
-    // const nextEnd=new Date(end);
-    // nextEnd.setHours(nextEnd.getHours() + 8);
-    // remainingTime=nextEnd - currentTime;
-    // console.log("Flash sale is ongoing");
-
-    // document.getElementById('hoursf').style.display='inline-block' ;
-    // document.getElementById('minutesf').style.display='inline-block' ;
-    // document.getElementById('secondsf').style.display='inline-block' ;
-    // document.getElementById('expired_time_flash_sale').style.display='inline-block' ;
-    // document.getElementById('countdown-start1').style.display='none' ;
-    // document.getElementById('countdown-start2').style.display='none' ;
-    // document.getElementById('countdown-end').style.display='none' ;
-    // } else if (currentHour < endHour && endHour===9) {
-    // remainingTime=currentTime - end;
-    // console.log("Before flash sale part 2 starts");
-
-    // document.getElementById('hoursf').style.display='none' ;
-    // document.getElementById('minutesf').style.display='none' ;
-    // document.getElementById('secondsf').style.display='none' ;
-    // document.getElementById('expired_time_flash_sale').style.display='inline-block' ;
-    // document.getElementById('countdown-start1').style.display='inline-block' ;
-    // document.getElementById('countdown-start2').style.display='none' ;
-    // document.getElementById('countdown-end').style.display='none' ;
-    // } else if (currentHour < endHour && endHour===17) {
-    // remainingTime=currentTime - end;
-    // console.log("Before flash sale part 3 starts");
-
-    // document.getElementById('hoursf').style.display='none' ;
-    // document.getElementById('minutesf').style.display='none' ;
-    // document.getElementById('secondsf').style.display='none' ;
-    // document.getElementById('expired_time_flash_sale').style.display='none' ;
-    // document.getElementById('countdown-start1').style.display='none' ;
-    // document.getElementById('countdown-start2').style.display='inline-block' ;
-    // document.getElementById('countdown-end').style.display='none' ;
-    // } else {
-    // remainingTime=0;
-    // console.log("Flash sale has ended");
-
-    // clearInterval(timerInterval);
-    // document.getElementById('hoursf').style.display='none' ;
-    // document.getElementById('minutesf').style.display='none' ;
-    // document.getElementById('secondsf').style.display='none' ;
-    // document.getElementById('expired_time_flash_sale').style.display='none' ;
-    // document.getElementById('countdown-start1').style.display='none' ;
-    // document.getElementById('countdown-start2').style.display='none' ;
-    // document.getElementById('countdown-end').style.display='inline-block' ;
-    // }
-
-    // let remainingHours, remainingMinutes, remainingSeconds;
-
-    // if (remainingTime>= 24 * 60 * 60 * 1000) {
-    // remainingHours = Math.floor(remainingTime / (24 * 60 * 60 * 1000));
-    // remainingMinutes = Math.floor((remainingTime % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
-    // remainingSeconds = Math.floor((remainingTime % (60 * 60 * 1000)) / (60 * 1000));
-    // } else {
-    // remainingHours = Math.floor(remainingTime / (60 * 60 * 1000));
-    // remainingMinutes = Math.floor((remainingTime % (60 * 60 * 1000)) / (60 * 1000));
-    // remainingSeconds = Math.floor((remainingTime % (60 * 1000)) / 1000);
-    // }
-
-
-    // const countdownText = document.querySelector('.countdown-time');
-    // countdownText.innerHTML = `${remainingHours.toString().padStart(2, '0')}:${remainingMinutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
-    // }
-
-    // function formatTime(time) {
-    // let seconds = Math.floor(time / 1000);
-    // let minutes = Math.floor(seconds / 60);
-    // let hours = Math.floor(minutes / 60);
-
-    // minutes %= 60;
-    // seconds %= 60;
-
-    // return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    // }
-
-    // setCountdownTimer();
-    // timerInterval = setInterval(setCountdownTimer, 1000);
-
-    // countdownContainer.appendChild(countdownText);
-    // }
-
-    // function showFlashSale(containerId, endHour) {
-    // const allContainers = document.querySelectorAll('.flash-sale-container');
-    // allContainers.forEach(container => {
-    // container.classList.add('hidden');
-    // });
-
-    // const selectedContainer = document.getElementById(containerId);
-    // selectedContainer.classList.remove('hidden');
-
-    // showCountdownTimer(endHour);
-
-    // const allButtons = document.querySelectorAll('.btn-flashsale');
-    // allButtons.forEach(button => {
-    // button.classList.remove('active');
-    // });
-
-    // const selectedButton = document.getElementById(`part${containerId.charAt(containerId.length - 1)}Button`);
-    // selectedButton.classList.add('active');
-
-    // const currentTime = new Date();
-    // const currentHour = currentTime.getHours();
-    // const currentMinute = currentTime.getMinutes();
-    // console.log(`Flash Sale Part ${containerId.charAt(containerId.length - 1)} - Current Time: ${currentHour}:${currentMinute}`);
-
-    // let isDisabled;
-    // if (endHour === 17) {
-    // isDisabled = (currentHour >= 1 && currentHour < 17);
-    // } else {
-    // isDisabled=currentHour < endHour || currentHour>= endHour + 8;
-    // }
-    // console.log(`Flash Sale Part ${containerId.charAt(containerId.length - 1)} isDisabled: ${isDisabled}`);
-
-    // const allItems = document.querySelectorAll('.swiper-slide');
-    // allItems.forEach(item => {
-    // if (isDisabled) {
-    // item.classList.add('disabled');
-    // const diskonFlashSale = item.querySelector('.diskon-flashsale');
-    // if (diskonFlashSale) {
-    // diskonFlashSale.style.display = 'none';
-    // }
-    // } else {
-    // item.classList.remove('disabled');
-    // const diskonFlashSale = item.querySelector('.diskon-flashsale');
-    // if (diskonFlashSale) {
-    // diskonFlashSale.style.display = 'block';
-    // }
-    // }
-    // });
-    // }
-
-    // function scrollToMiddleOfContent() {
-    // const activeTab = document.querySelector('.tab-pane.active');
-    // if (activeTab.id !== 'pills-all') {
-    // document.querySelector('a[href="#pills-all"]').click();
-    // setTimeout(() => {
-    // const flashSaleWrapper = document.querySelector('.flash-sale-wrapper');
-    // flashSaleWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    // }, 300); // Delay 300ms
-    // } else {
-    // const flashSaleWrapper = document.querySelector('.flash-sale-wrapper');
-    // flashSaleWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    // }
-    // }
-
-    // document.getElementById('part1Button').addEventListener('click', function() {
-    // clearInterval(timerInterval);
-    // showFlashSale('flashSalePart1', 1);
-    // scrollToMiddleOfContent();
-    // });
-
-    // document.getElementById('part2Button').addEventListener('click', function() {
-    // clearInterval(timerInterval);
-    // showFlashSale('flashSalePart2', 9);
-    // scrollToMiddleOfContent();
-    // });
-
-    // document.getElementById('part3Button').addEventListener('click', function() {
-    // clearInterval(timerInterval);
-    // showFlashSale('flashSalePart3', 17);
-    // scrollToMiddleOfContent();
-    // });
-
-    // const currentHour = new Date().getHours();
-    // const currentMinute = new Date().getMinutes();
-    // console.log(`Current time: ${currentHour}:${currentMinute}`);
-
-    // if ((currentHour === 1 && currentMinute >= 0) || (currentHour > 1 && currentHour < 9)) {
-    // console.log("Activating Flash Sale Part 1");
-    // showFlashSale('flashSalePart1', 1);
-    // } else if ((currentHour===9 && currentMinute>= 0) || (currentHour > 9 && currentHour < 17)) {
-    // console.log("Activating Flash Sale Part 2");
-    // showFlashSale('flashSalePart2', 9);
-    // } else if ((currentHour===17 && currentMinute>= 0) || (currentHour > 17 && currentHour < 24) || (currentHour===0 && currentMinute < 60)) {
-    // console.log("Activating Flash Sale Part 3");
-    // showFlashSale('flashSalePart3', 17);
-    // } else {
-    // console.log("Flash Sale has ended");
-    // const countdownContainer=document.getElementById('expired_time_flash_sale');
-    // countdownContainer.innerHTML='Flash Sale Telah Berakhir' ;
-    // }
-</script>
 <?php $this->endSection(); ?>

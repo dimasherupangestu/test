@@ -862,12 +862,6 @@
         border-color: var(--warna_5) !important;
         color: var(--warna_5) !important;
     }
-
-    .swiper-slide.sold-out {
-        pointer-events: none;
-        filter: grayscale(100%);
-        cursor: not-allowed;
-    }
 </style>
 
 <?php $this->endSection(); ?>
@@ -879,7 +873,7 @@
     <img src="<?= base_url(); ?>/assets/images/bg-leaf.png" id="bg-leaf-top-right">
 </div>
 
-<!-- <h1 style="display: inline-block;" id="expired_time_flash_sale" class="countdown-time">hallo</h1> -->
+
 <div class="total-price-box">
     <div class="container">
         <div class="row">
@@ -1124,7 +1118,7 @@
                                                                     <?php endif; ?>
                                                                     <?php if (isset($loop['limitflashsale']) && $loop['limitflashsale'] > 0) : ?>
                                                                         <div class="diskon-flashsale">
-                                                                            <span class="limitflashsaletxt2">Tersisa1 : <?= $loop['limitflashsale']; ?></span>
+                                                                            <span class="limitflashsaletxt2">Tersisa : <?= $loop['limitflashsale']; ?></span>
                                                                         </div>
                                                                     <?php elseif (isset($loop['limitflashsale']) && $loop['limitflashsale'] === 0): ?>
                                                                         <div class="diskon-flashsale">
@@ -1192,7 +1186,6 @@
                                                         <br>
                                                         <a style="font-size: 14px;font-weight:600; text-align: center;color:var(--warna_hitam);"
                                                             for="product-<?= $loop['id']; ?>"><?= $loop['product']; ?></a>
-
                                                         <br>
                                                         <?php
                                                         $price = null;
@@ -1260,7 +1253,7 @@
                                                         <?php endif; ?>
                                                         <?php if (isset($loop['limitflashsale']) && $loop['limitflashsale'] > 0) : ?>
                                                             <div class="diskon-flashsale">
-                                                                <span class="limitflashsaletxt2">Tersisa2 : <?= $loop['limitflashsale']; ?></span>
+                                                                <span class="limitflashsaletxt2">Tersisa : <?= $loop['limitflashsale']; ?></span>
                                                             </div>
                                                         <?php elseif (isset($loop['limitflashsale']) && $loop['limitflashsale'] === 0): ?>
                                                             <div class="diskon-flashsale">
@@ -1740,8 +1733,9 @@
                                                             continue;
                                                         } ?>
 
-                                                        <div id="<?= $loop['id']; ?>" class="col-6 col-lg-4 <?= ($loop['limitflashsale'] == 0) ? '' : 'swiper-slide'; ?>" style="padding-right: 5px;padding-left: 5px;display:grid;" data-flashsale-part="<?= $loop['flashsale_part']; ?>">
+                                                        <div id="<?= $loop['id']; ?>" class="col-6 col-lg-4" style="padding-right: 5px;padding-left: 5px;display:grid;" data-flashsale-part="<?= $loop['flashsale_part']; ?>">
                                                             <input type="radio" for="product-<?= $loop['id']; ?>" id="product-<?= $loop['id']; ?>" class="radio-nominale" name="product" value="<?= $loop['id']; ?>" data-product-name="<?= $loop['product']; ?>" onchange="get_price(this.value);get_price_and_scroll(this.value);" onclick="toggleElement()">
+
                                                             <label for="product-<?= $loop['id']; ?>" <?= ($loop['limitflashsale'] > 0) ? 'style="background: linear-gradient(45deg , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, rgba(255, 255, 255, 1) 50%, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD ); 
                                                             background-size: 700% 200%;
                                                             animation: gradientAnimation 1.5s linear infinite;"' : '' ?>>
@@ -1827,7 +1821,7 @@
                                                                     <?php endif; ?>
                                                                     <?php if (isset($loop['limitflashsale']) && $loop['limitflashsale'] > 0) : ?>
                                                                         <div class="diskon-flashsale">
-                                                                            <span class="limitflashsaletxt2">Tersisa3 : <?= $loop['limitflashsale']; ?></span>
+                                                                            <span class="limitflashsaletxt2">Tersisa : <?= $loop['limitflashsale']; ?></span>
                                                                         </div>
                                                                     <?php elseif (isset($loop['limitflashsale']) && $loop['limitflashsale'] === 0): ?>
                                                                         <div class="diskon-flashsale">
@@ -1880,7 +1874,7 @@
                                             <?php
                                             // if ($loop['flashsale_part'] < 1) : 
                                             ?>
-                                            <div id="<?= $loop['id']  ?>" class="col-6 col-lg-4 <?= ($loop['limitflashsale'] == 0) ? '' : 'swiper-slide'; ?>" style="padding-right: 5px;padding-left: 5px;display:grid; " data-flashsale-part="<?= $loop['flashsale_part']; ?>">
+                                            <div id="<?= $loop['id']  ?>" class="col-6 col-lg-4" style="padding-right: 5px;padding-left: 5px;display:grid;" data-flashsale-part="<?= $loop['flashsale_part']; ?>">
                                                 <input type="radio" for="product-<?= $loop['id']; ?>" id="product-<?= $loop['id']; ?>" class="radio-nominale" name="product" value="<?= $loop['id']; ?>" onchange="get_price(this.value);get_price_and_scroll(this.value, '<?= $loop['product']; ?>');" onclick="toggleElement()">
 
                                                 <label for="product-<?= $loop['id']; ?>" <?= ($loop['limitflashsale'] > 0) ? 'style="background: linear-gradient(45deg , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, rgba(255, 255, 255, 1) 50%, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD ); 
@@ -1960,12 +1954,9 @@
                                                         <?php if ($discountPrice != null): ?>
                                                             <p class="currency-idr-2 discount-price"><?= $discountPrice; ?></p>
                                                         <?php endif; ?>
-
                                                         <?php if (isset($loop['limitflashsale']) && $loop['limitflashsale'] > 0) : ?>
                                                             <div class="diskon-flashsale">
-                                                                <!-- <h3 id="expired_time_flash_sale"></h3>   -->
                                                                 <span class="limitflashsaletxt2">Tersisa : <?= $loop['limitflashsale']; ?></span>
-
                                                             </div>
                                                         <?php elseif (isset($loop['limitflashsale']) && $loop['limitflashsale'] === 0): ?>
                                                             <div class="diskon-flashsale">
@@ -2118,6 +2109,13 @@
 
 
 
+
+
+
+
+
+
+
                 <script>
                     document.addEventListener("DOMContentLoaded", function() {
                         function showKomenAlert(callback) {
@@ -2221,30 +2219,6 @@
                     });
                 </script>
 
-                <script>
-                    $(document).ready(function() {
-                        var timeParsed = '<?= $expired; ?>'.replace(' ', 'T').split(/[^0-9]/);
-                        var countDown = new Date(new Date(timeParsed[0], timeParsed[1] - 1, timeParsed[2], timeParsed[3], timeParsed[4], timeParsed[5])).getTime();
-
-                        var x = setInterval(() => {
-                            let nowTime = new Date().getTime();
-                            var distance = countDown - nowTime;
-
-                            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                            if (distance > 0) {
-                                clearInterval(x);
-                                $("#expired_time_flash_sale").text("Flash Sale berhasil");
-                            } else {
-                                $("#expired_time_flash_sale").text("Flash Sale Berakhir");
-                                $(".swiper-slide").addClass("sold-out");
-                            }
-                        }, 1000);
-                    });
-                </script>
 
 
                 <script>

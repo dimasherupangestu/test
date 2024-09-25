@@ -2583,9 +2583,11 @@ class Games extends BaseController
                             'category' => $category,
                             'products' => $product,
                             'sitekey' => $this->M_Base->u_get('captcha_site_key'),
+                            'expired' => $this->M_Base->u_get('flashsale_expired'),
+
                             // 'is_mobile' => $is_mobile,
                         ]);
-                        // dd($data);
+
                         return view('Games/index', $data);
                     } else {
                         return redirect()->to(base_url());

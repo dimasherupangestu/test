@@ -88,8 +88,7 @@ class Konfigurasi extends BaseController
                 }
             } else if ($this->request->getPost('tombol') == 'expired') {
                 $this->M_Base->u_update('flashsale_expired', $this->request->getPost('expired'));
-
-                $this->session->setFlashdata('success', 'Data konfigurasi berhasil disimpan');
+                $this->session->setFlashdata('success', 'Data Flashsale berhasil disimpan');
                 return redirect()->to(str_replace('index.php/', '', site_url(uri_string())));
             } else if ($this->request->getPost('tombol') == 'flashsale') {
 
