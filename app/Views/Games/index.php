@@ -1124,7 +1124,7 @@
                                                                     <?php endif; ?>
                                                                     <?php if (isset($loop['limitflashsale']) && $loop['limitflashsale'] > 0) : ?>
                                                                         <div class="diskon-flashsale">
-                                                                            <span class="limitflashsaletxt2">Tersisa1 : <?= $loop['limitflashsale']; ?></span>
+                                                                            <span class="limitflashsaletxt2">Tersisa : <?= $loop['limitflashsale']; ?></span>
                                                                         </div>
                                                                     <?php elseif (isset($loop['limitflashsale']) && $loop['limitflashsale'] === 0): ?>
                                                                         <div class="diskon-flashsale">
@@ -1177,7 +1177,7 @@
                                             <?php
                                             // if ($loop['flashsale_part'] < 1) : 
                                             ?>
-                                            <div id="<?= $loop['id']  ?>" class="col-6 col-lg-4" style="padding-right: 5px;padding-left: 5px;display:grid;" data-flashsale-part="<?= $loop['flashsale_part']; ?>">
+                                            <div id="<?= $loop['id']  ?>" class="col-6 col-lg-4 <?= ($loop['flashsale_part']); ?>" style="padding-right: 5px;padding-left: 5px;display:grid;" data-flashsale-part="<?= $loop['flashsale_part']; ?>">
                                                 <input type="radio" for="product-<?= $loop['id']; ?>" id="product-<?= $loop['id']; ?>" class="radio-nominale" name="product" value="<?= $loop['id']; ?>" onchange="get_price(this.value);get_price_and_scroll(this.value, '<?= $loop['product']; ?>');" onclick="toggleElement()">
 
                                                 <label for="product-<?= $loop['id']; ?>" <?= ($loop['limitflashsale'] > 0) ? 'style="background: linear-gradient(45deg , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, rgba(255, 255, 255, 1) 50%, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD ); 
@@ -1260,7 +1260,7 @@
                                                         <?php endif; ?>
                                                         <?php if (isset($loop['limitflashsale']) && $loop['limitflashsale'] > 0) : ?>
                                                             <div class="diskon-flashsale">
-                                                                <span class="limitflashsaletxt2">Tersisa2 : <?= $loop['limitflashsale']; ?></span>
+                                                                <span class="limitflashsaletxt2">Tersisa : <?= $loop['limitflashsale']; ?></span>
                                                             </div>
                                                         <?php elseif (isset($loop['limitflashsale']) && $loop['limitflashsale'] === 0): ?>
                                                             <div class="diskon-flashsale">
@@ -1740,7 +1740,7 @@
                                                             continue;
                                                         } ?>
 
-                                                        <div id="<?= $loop['id']; ?>" class="col-6 col-lg-4 <?= ($loop['limitflashsale'] == 0) ? '' : 'swiper-slide'; ?>" style="padding-right: 5px;padding-left: 5px;display:grid;" data-flashsale-part="<?= $loop['flashsale_part']; ?>">
+                                                        <div id="<?= $loop['id']; ?>" class="col-6 col-lg-4" style="padding-right: 5px;padding-left: 5px;display:grid;" data-flashsale-part="<?= $loop['flashsale_part']; ?>">
                                                             <input type="radio" for="product-<?= $loop['id']; ?>" id="product-<?= $loop['id']; ?>" class="radio-nominale" name="product" value="<?= $loop['id']; ?>" data-product-name="<?= $loop['product']; ?>" onchange="get_price(this.value);get_price_and_scroll(this.value);" onclick="toggleElement()">
                                                             <label for="product-<?= $loop['id']; ?>" <?= ($loop['limitflashsale'] > 0) ? 'style="background: linear-gradient(45deg , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, rgba(255, 255, 255, 1) 50%, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD ); 
                                                             background-size: 700% 200%;
@@ -1827,7 +1827,7 @@
                                                                     <?php endif; ?>
                                                                     <?php if (isset($loop['limitflashsale']) && $loop['limitflashsale'] > 0) : ?>
                                                                         <div class="diskon-flashsale">
-                                                                            <span class="limitflashsaletxt2">Tersisa3 : <?= $loop['limitflashsale']; ?></span>
+                                                                            <span class="limitflashsaletxt2">Tersisa : <?= $loop['limitflashsale']; ?></span>
                                                                         </div>
                                                                     <?php elseif (isset($loop['limitflashsale']) && $loop['limitflashsale'] === 0): ?>
                                                                         <div class="diskon-flashsale">
@@ -1878,9 +1878,14 @@
 
                                         <?php foreach ($product as $loop): ?>
                                             <?php
-                                            // if ($loop['flashsale_part'] < 1) : 
+                                            date_default_timezone_set('Asia/Jakarta');
+                                            $currentTime = date('Y-m-d H:i:s');
+                                            $expiredTime = $expired; // Assuming $expired holds the expiration time
+                                            $isExpired = strtotime($currentTime) > strtotime($expiredTime);
+                                            // if ($isExpired == true):
                                             ?>
-                                            <div id="<?= $loop['id']  ?>" class="col-6 col-lg-4 <?= ($loop['limitflashsale'] == 0) ? '' : 'swiper-slide'; ?>" style="padding-right: 5px;padding-left: 5px;display:grid; " data-flashsale-part="<?= $loop['flashsale_part']; ?>">
+                                            <div id="<?= $loop['id'] ?>" class="col-6 col-lg-4 <?= ($loop['flashsale_part'] >= 1 && $loop['limitflashsale'] >= 1 ? "swiper-slide" : ""); ?>" style="padding-right: 5px;padding-left: 5px;display:grid;" data-flashsale-part="<?= $loop['flashsale_part']; ?>">
+
                                                 <input type="radio" for="product-<?= $loop['id']; ?>" id="product-<?= $loop['id']; ?>" class="radio-nominale" name="product" value="<?= $loop['id']; ?>" onchange="get_price(this.value);get_price_and_scroll(this.value, '<?= $loop['product']; ?>');" onclick="toggleElement()">
 
                                                 <label for="product-<?= $loop['id']; ?>" <?= ($loop['limitflashsale'] > 0) ? 'style="background: linear-gradient(45deg , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, rgba(255, 255, 255, 1) 50%, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD ); 
@@ -1993,7 +1998,7 @@
                                                 </label>
                                             </div>
                                             <?php
-                                            // endif; 
+                                            // endif;
                                             ?>
                                         <?php endforeach ?>
                                     </div>

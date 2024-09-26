@@ -1855,9 +1855,8 @@
 <body>
     <div class="content" style="padding-top: 0px;">
         <header>
-            <nav class="navbar navbar-expand-lg navbar-dark  bg-custom shadow-navbar fixed" id="navbar" style="top:0px">
+            <nav class="navbar navbar-expand-lg navbar-dark  bg-custom shadow-navbar fixed w-full" id="navbar" style="top:0px">
                 <div class="container">
-
                     <a class="navbar-brand" href="<?= base_url(); ?>">
                         <img src="<?= base_url(); ?>/assets/images/<?= $web['logo']; ?>" height="50" alt="logo icon"
                             class="rounded">
