@@ -1911,9 +1911,102 @@
     }
 
 
+    .modal-container-7 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        opacity: 0;
+        visibility: hidden;
+        transform: scale(1, 1);
+        transition: 0.5s;
+        z-index: 99;
+        background: rgba(0, 0, 0, 0.1) !important;
+    }
+
+    body.open-modal-7 .modal-container-7 {
+        visibility: visible;
+        opacity: 1;
+        animation: modal-container-3-in 1s both;
+    }
+
+    .modal-window-7 {
+        position: fixed;
+        top: 20%;
+        left: 50%;
+        background: #ffffff;
+        color: #000000;
+        padding: 10px 10px;
+        width: 30rem;
+        height: 50%;
+        overflow-y: auto;
+        height: auto;
+        border-radius: 12px;
+        translate: -50% 0%;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.3s;
+        z-index: 999;
+
+        box-shadow: 0 0 0 5px #ffffff;
+    }
+
+    @media (min-width: 320px) and (max-width: 480px) {
+        .modal-window-7 {
+            width: 400px;
+        }
+    }
+
+    body.open-modal-7 .modal-window-7 {
+        opacity: 1;
+        visibility: visible;
+        animation: modal-window-3-in 1s;
+    }
+
+    body.closed-modal-7 .modal-window-7 {
+        opacity: 0;
+        visibility: hidden;
+        translate: -50% -50%;
+    }
+
+    @keyframes modal-container-7-in {
+        0% {
+            scale: 0 0.005;
+        }
+
+        33% {
+            scale: 1 0.005;
+        }
+
+        66%,
+        100% {
+            scale: 1 1;
+        }
+    }
+
+    @keyframes modal-window-7-in {
+
+        0%,
+        66% {
+            opacity: 0;
+            visibility: hidden;
+            translate: -50% -30%;
+        }
+
+        100% {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+
+
     .infl-body {
         position: relative;
         top: 1rem;
+
         display: flex;
         flex-wrap: wrap;
     }
@@ -1922,6 +2015,8 @@
         flex: 0 0 50%;
         box-sizing: border-box;
         padding: 10px;
+
+        /* padding-bottom: 40rem; */
         justify-content: space-evenly;
     }
 
@@ -2280,6 +2375,7 @@
 
                         <!-- Free Fire Produk -->
                         <?php if ($game['category'] == 'Produk Populer'): ?>
+
                             <div style="margin-bottom:30px; display:flex;" class="col-sm-3 col-lg-2 col-4 text-center">
                                 <div class="card mb-3" style="">
                                     <div style="margin-bottom: 0px;" class="card" bis_skin_checked="1">
@@ -2295,7 +2391,7 @@
                                     </div>
                                 </div>
                                 <div class="dropdown" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-                                    <button id="toggleModal7Button" class="btn btn-transparent" onclick="toggleModal7()" type="button" aria-haspopup="true" aria-expanded="false" style="width: 100%; height: 100%; opacity: 0;">Open Modal</button>
+                                    <button id="toggleModal7Button" class="btn btn-transparent" onclick="toggleModal8()" type="button" aria-haspopup="true" aria-expanded="false" style="width: 100%; height: 100%; opacity: 0;">Open Modal</button>
                                 </div>
                             </div>
                         <?php endif; ?>
@@ -2328,6 +2424,9 @@
                         <!-- Modal Joki -->
                         <div class="modal-container-5" onclick="toggleModal5()"></div>
                         <div class="modal-window-5 hidden-category" id="modal-content-5">
+                            <div style="text-align:center">
+                                <h4 class="text-center" style="font-weight: bold; color: #000; font-size: 1.8rem; text-transform: uppercase;">JOKI MOBILE LEGEND</h4>
+                            </div>
                             <div class="infl-body">
                                 <?php foreach ($game['games'] as $loop): ?>
                                     <?php if ($loop['category'] == 'Joki Rank' && $loop['status'] == 'On'): ?>
@@ -2348,12 +2447,15 @@
                         </div>
 
 
-                        <!-- Modal Fre fire -->
-                        <div class="modal-container-5" onclick="toggleModal6()"></div>
-                        <div class="modal-window-5 hidden-category" id="modal-content-5">
+                        <!-- Modal Free Fire -->
+                        <div class="modal-container-7" onclick="toggleModal8()"></div>
+                        <div class="modal-window-7 hidden-category" id="modal-content-7">
+                            <h2 style="text-align:center">
+                                <h4 class="text-center" style="font-weight: bold; color: #000; font-size: 1.8rem; text-transform: uppercase;">Free Fire</h4>
+                            </h2>
                             <div class="infl-body">
                                 <?php foreach ($game['games'] as $loop): ?>
-                                    <?php if ($loop['games'] == 'Free Fire' && $loop['status'] == 'On'): ?>
+                                    <?php if ($loop['games'] == 'FREE FIRE l' || $loop['games'] == 'FREE FIRE' && $loop['status'] == 'On'): ?>
                                         <div class="infl-body-item">
                                             <div style="margin-bottom: 0px;" class="card-infl">
                                                 <a href="<?= base_url(); ?>/games/<?= $loop['slug']; ?>">
@@ -2926,6 +3028,20 @@
         }, 100); // Menunda sedikit agar perpindahan tab sempat selesai
     };
 
+    const toggleModal8 = () => {
+        const bodyClassList = document.body.classList;
+        if (bodyClassList.contains("open-modal-7")) {
+            bodyClassList.remove("open-modal-7");
+            bodyClassList.add("closed-modal-7");
+        } else {
+            resetModalClasses();
+            bodyClassList.remove("closed-modal-7");
+            bodyClassList.add("open-modal-7");
+        }
+        document.body.classList.toggle("no-scroll");
+        document.getElementById('modal-content-7').classList.toggle('hidden-category');
+    };
+
     const toggleModal7 = () => {
         // Pindah ke tab "all"
         document.querySelector('#pills-all-tab').click();
@@ -2938,9 +3054,11 @@
 
     const resetModalClasses = () => {
         const bodyClassList = document.body.classList;
-        bodyClassList.remove("open-modal-3", "closed-modal-3", "open-modal-5", "closed-modal-5");
+        bodyClassList.remove("open-modal-3", "closed-modal-3", "open-modal-5", "closed-modal-5", "open-modal-7", "closed-modal-7");
         document.getElementById('modal-content-3').classList.add('hidden-category');
         document.getElementById('modal-content-5').classList.add('hidden-category');
+        document.getElementById('modal-content-7').classList.add('hidden-category');
+
     };
 </script>
 

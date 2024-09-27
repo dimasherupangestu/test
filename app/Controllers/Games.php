@@ -21,7 +21,14 @@ class Games extends BaseController
                         $currentTime = time();
                         $isFormProcessed = $this->isFormProcessed($formIdentifier);
                         $processedTimestamp = $this->session->get('formProcessedExpiration.' . $formIdentifier);
+                        $expiredTime = $this->M_Base->u_get('flashsale_expired');
+                        $currentTime = date('Y-m-d H:i:s');
+                        $isExpired = strtotime($currentTime) > strtotime($expiredTime);
 
+                        if ($isExpired) {
+                            // Flash sale sudah berakhir
+                            return redirect()->to(base_url())->with('error', 'Flash Sale sudah berakhir');
+                        }
                         if ($this->request->getPost('tombol')) {
 
                             if ($this->request->getPost('order_token')) {
@@ -2572,7 +2579,6 @@ class Games extends BaseController
 
                         // Mengecek apakah user agent mengandung string tertentu yang umumnya terdapat pada perangkat mobile
                         // $is_mobile = preg_match('/(android|iphone|ipad|ipod|blackberry|windows phone)/i', $user_agent);
-
                         $data = array_merge($this->base_data, [
                             'title' => $games[0]['games'],
                             'games' => $games[0],
@@ -2583,8 +2589,7 @@ class Games extends BaseController
                             'category' => $category,
                             'products' => $product,
                             'sitekey' => $this->M_Base->u_get('captcha_site_key'),
-                            'expired' => $this->M_Base->u_get('flashsale_expired'),
-
+                            'expired' => $expiredTime,
                             // 'is_mobile' => $is_mobile,
                         ]);
 
