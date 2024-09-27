@@ -1878,17 +1878,15 @@
 
                                         <?php foreach ($product as $loop): ?>
                                             <?php
-                                            date_default_timezone_set('Asia/Jakarta');
                                             $currentTime = date('Y-m-d H:i:s');
-                                            $expiredTime = $expired; // Assuming $expired holds the expiration time
+                                            $expiredTime = $expired;
                                             $isExpired = strtotime($currentTime) > strtotime($expiredTime);
-                                            // if ($isExpired == true):
+                                            if ($isExpired == true) {
+                                                continue; // Skip rendering if the flash sale has expired
+                                            }
                                             ?>
                                             <div id="<?= $loop['id'] ?>" class="col-6 col-lg-4 <?= ($loop['flashsale_part'] >= 1 && $loop['limitflashsale'] >= 1 ? "swiper-slide" : ""); ?>" style="padding-right: 5px;padding-left: 5px;display:grid;" data-flashsale-part="<?= $loop['flashsale_part']; ?>">
-
-                                                <input type="radio" for="product-<?= $loop['id']; ?>" id="product-<?= $loop['id']; ?>" class="radio-nominale" name="product" value="<?= $loop['id']; ?>" onchange="get_price(this.value);get_price_and_scroll(this.value, '<?= $loop['product']; ?>');" onclick="toggleElement()">
-
-                                                <label for="product-<?= $loop['id']; ?>" <?= ($loop['limitflashsale'] > 0) ? 'style="background: linear-gradient(45deg , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, rgba(255, 255, 255, 1) 50%, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD ); 
+                                                <input type="radio" for="product-<?= $loop['id']; ?>" id="product-<?= $loop['id']; ?>" class="radio-nominale" name="product" value="<?= $loop['id']; ?>" onchange="get_price(this.value);get_price_and_scroll(this.value, '<?= $loop['product']; ?>');" onclick="toggleElement()"> <label for="product-<?= $loop['id']; ?>" <?= ($loop['limitflashsale'] > 0) ? 'style="background: linear-gradient(45deg , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, rgba(255, 255, 255, 1) 50%, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD ); 
                                                     background-size: 700% 200%;
                                                     animation: gradientAnimation 1.5s linear infinite;"' : '' ?>>
                                                     <div style="text-align: center;margin-bottom:10px;margin-top:10px;">
@@ -2234,18 +2232,18 @@
                         var x = setInterval(() => {
                             let nowTime = new Date().getTime();
                             var distance = countDown - nowTime;
-
                             var days = Math.floor(distance / (1000 * 60 * 60 * 24));
                             var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                             var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                            if (distance > 0) {
+                            if (distance <= 0) {
                                 clearInterval(x);
-                                $("#expired_time_flash_sale").text("Flash Sale berhasil");
-                            } else {
                                 $("#expired_time_flash_sale").text("Flash Sale Berakhir");
-                                $(".swiper-slide").addClass("sold-out");
+                                $(".swiper-slide").addClass("sold-out"); // Disable access to product
+                                $(".radio-nominale").attr("disabled", true); // Disable radio buttons
+                            } else {
+                                $("#expired_time_flash_sale").text("Flash Sale berhasil");
                             }
                         }, 1000);
                     });

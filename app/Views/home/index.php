@@ -2097,7 +2097,7 @@
 <?php $this->section('content'); ?>
 
 
-<div class="mb-4" style="padding-top: 10px;margin-bottom: 1rem !important; background:red">
+<div class="mb-4" style="padding-top: 10px;margin-bottom: 1rem !important; ">
     <div class="pt-0" style="">
         <div class="container banner-pad">
             <div class="loader">
@@ -2179,6 +2179,7 @@
     <div class="swiper-pagination"></div>
 </div>
 <!-- End Flashsale -->
+
 <div class="container">
     <div class="PB-5 pt-5" style="border-radius: 10px;padding: 10px; overflow: hidden;margin-top: -50px;">
         <ul class="nav nav-pills tab-category gap-2 pb-2" id="pills-tab" role="tablist"
@@ -2219,11 +2220,12 @@
     <!-- Tab All -->
     <div class="tab-pane fade show active" id="pills-all" role="tabpanel" aria-labelledby="pills-all-tab">
         <?php foreach ($games as $game): ?>
+
             <div class="container pt-2 pb-2">
                 <div class="row">
                     <div class="col-12">
                         <?php if ($game['category'] != 'Influencer' && $game['category'] != 'Games Populer' && $game['category'] != 'Joki Rank'): ?>
-                            <h5 class="font-proximanovabldddd" style="font-size: 28px;color:var(--warna_2) !important; font-weight: 700; text-transform:uppercase;"><?= $game['category']; ?></h5>
+                            <h5 class="font-proximanovabldddd" style="font-size: 28px;color:var(--warna_2) !important; font-weight: 700; text-transform:uppercase; margin-bottom: 1rem; margin-top: 1rem;"><?= $game['category']; ?></h5>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -2231,7 +2233,6 @@
             <div class="pb-4">
                 <div class="container">
                     <div class="row game">
-
                         <!-- Influencer Produk -->
                         <?php if ($game['category'] == 'Produk Populer'): ?>
                             <div style="margin-bottom:30px; display:flex;" class="col-sm-3 col-lg-2 col-4 text-center">
@@ -2272,6 +2273,29 @@
                                 </div>
                                 <div class="dropdown" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
                                     <button id="toggleModal5Button" class="btn btn-transparent" onclick="toggleModal5()" type="button" aria-haspopup="true" aria-expanded="false" style="width: 100%; height: 100%; opacity: 0;">Open Modal</button>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+
+                        <!-- Free Fire Produk -->
+                        <?php if ($game['category'] == 'Produk Populer'): ?>
+                            <div style="margin-bottom:30px; display:flex;" class="col-sm-3 col-lg-2 col-4 text-center">
+                                <div class="card mb-3" style="">
+                                    <div style="margin-bottom: 0px;" class="card" bis_skin_checked="1">
+                                        <img src="<?= base_url(); ?>/assets/images/freefire.jpg" class="img-fluid img-games" style="border-radius: 15px 15px 15px 15px; display: block;">
+                                        <div data-v-16b318a8="" class="product-tile__clip-path">
+                                            <img src="<?= base_url(); ?>/assets/images/favicon-hiddengame.png" alt="card-img" class="card-img">
+                                            <div class="card-title2" style="font-weight:bold;" bis_skin_checked="1">FREE FIRE</div>
+                                        </div>
+                                        <div class="card-subtitle" bis_skin_checked="1"></div>
+                                        <div class="card-topup" bis_skin_checked="1" hidden>
+                                            <div class="btn-topup" style="font-size: 0.60rem!important;" bis_skin_checked="1"> TOP UP </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dropdown" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                                    <button id="toggleModal7Button" class="btn btn-transparent" onclick="toggleModal7()" type="button" aria-haspopup="true" aria-expanded="false" style="width: 100%; height: 100%; opacity: 0;">Open Modal</button>
                                 </div>
                             </div>
                         <?php endif; ?>
@@ -2324,10 +2348,33 @@
                         </div>
 
 
+                        <!-- Modal Fre fire -->
+                        <div class="modal-container-5" onclick="toggleModal6()"></div>
+                        <div class="modal-window-5 hidden-category" id="modal-content-5">
+                            <div class="infl-body">
+                                <?php foreach ($game['games'] as $loop): ?>
+                                    <?php if ($loop['games'] == 'Free Fire' && $loop['status'] == 'On'): ?>
+                                        <div class="infl-body-item">
+                                            <div style="margin-bottom: 0px;" class="card-infl">
+                                                <a href="<?= base_url(); ?>/games/<?= $loop['slug']; ?>">
+                                                    <img src="<?= base_url(); ?>/assets/images/games/<?= $loop['image']; ?>" class="img-infl" style="border-radius: 10px;">
+                                                    <div data-v-16b318a8="" class="product-tile__clip-path-infl">
+                                                        <img src="<?= base_url(); ?>/assets/images/favicon-hiddengame.png" alt="card-img" class="card-img">
+                                                        <div class="card-title2-infl" style="font-weight:bold;"><?= $loop['games']; ?></div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+
+
                         <!-- Start Game -->
 
                         <?php foreach ($game['games'] as $loop): ?>
-                            <?php if ($loop['status'] == 'On' && $loop['category'] != 'Influencer' && $game['category'] != 'Joki Rank' && $game['category'] != 'Games'): ?>
+                            <?php if ($loop['status'] == 'On' && $loop['category'] != 'Influencer' && $game['category'] != 'Joki Rank' && $game['category'] != 'Games' && $loop['games'] != 'FREE FIRE' && $loop['games'] != 'FREE FIRE l'): ?>
                                 <div style="margin-bottom: 30px;display: flex;" class="col-sm-3 col-lg-2 col-4 text-center">
                                     <div class="card mb-3" style="">
                                         <a href="<?= base_url(); ?>/games/<?= $loop['slug']; ?>" class="product_list">
@@ -2356,7 +2403,7 @@
 
                         <!-- Start Load more -->
                         <?php if ($game['category'] === 'Games'): ?>
-                            <div class="row game" id="gamesContainer">
+                            <div class="row game px-2" id="gamesContainer" style="width: 99%; ">
                                 <?php foreach ($game['games'] as $loop): ?>
                                     <?php if ($loop['status'] == 'On' && $loop['category'] != 'Influencer' && $game['category'] != 'Joki Rank' && $game['category'] != 'Games Populer'): ?>
                                         <div style="margin-bottom: 30px;display: flex;" class="col-sm-3 col-lg-2 col-4 text-center">
@@ -2879,6 +2926,16 @@
         }, 100); // Menunda sedikit agar perpindahan tab sempat selesai
     };
 
+    const toggleModal7 = () => {
+        // Pindah ke tab "all"
+        document.querySelector('#pills-all-tab').click();
+
+        // Scroll ke bagian modal dan aktifkan modal
+        setTimeout(() => {
+            document.querySelector('#toggleModal7Button').click();
+        }, 100); // Menunda sedikit agar perpindahan tab sempat selesai
+    };
+
     const resetModalClasses = () => {
         const bodyClassList = document.body.classList;
         bodyClassList.remove("open-modal-3", "closed-modal-3", "open-modal-5", "closed-modal-5");
@@ -3069,7 +3126,6 @@
         var x = setInterval(() => {
             let nowTime = new Date().getTime();
             var distance = countDown - nowTime;
-
             var days = Math.floor(distance / (1000 * 60 * 60 * 24));
             var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -3081,10 +3137,14 @@
                 clearInterval(x);
                 $("#expired_time_flash_sale").text("Flash Sale Berakhir");
                 $(".swiper-slide.slide-container").addClass("sold-out");
+                $(".product-link").each(function() {
+                    $(this).removeAttr("href");
+                });
             }
         }, 1000);
     });
 </script>
+
 
 
 <script>

@@ -110,8 +110,7 @@
         }
 
         body {
-            background: url(<?= base_url();
-                            ?>/assets/images/bg-neon-white-pointgo-new-7.jpeg);
+            background: url(<?= base_url() ?>/assets/images/bg-neon-white-pointgo-new-7.jpeg);
             color: var(--warna_text);
             /*font-family: 'Inter', sans-serif;*/
             font-family: 'Poppins', sans-serif;
@@ -1855,7 +1854,7 @@
 <body>
     <div class="content" style="padding-top: 0px;">
         <header>
-            <nav class="navbar navbar-expand-lg navbar-dark  bg-custom shadow-navbar fixed w-full" id="navbar" style="top:0px">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-custom shadow-navbar fixed" id="navbar" style="top:0px">
                 <div class="container">
                     <a class="navbar-brand" href="<?= base_url(); ?>">
                         <img src="<?= base_url(); ?>/assets/images/<?= $web['logo']; ?>" height="50" alt="logo icon"
@@ -1876,7 +1875,7 @@
                                 <div class="icon-voucher"><i class="fa fa-search icon-voucher2"></i></div>
                                 <input type="text" placeholder="Cari game atau voucher" class="form-control pl-10"
                                     id="searchInput1" name="searchInput1" value="<?php
-                                                                                    //  $search;
+                                                                                    // $search; 
                                                                                     ?>">
                             </div>
                         </form>
@@ -2151,7 +2150,18 @@
     <div class="search-containerb position-absolute shadow-sm" id="searchContainerb">
         <div class="container" style=" padding:0px !important;">
             <div class="col-12">
-
+                <form action="" method="POST" id="searchForm">
+                    <div class="input-group">
+                        <input type="text" class="form-control search" autocomplete="off"
+                            placeholder="Mau topup games apa?" id="searchInput" name="searchInput"
+                            value="<?php
+                                    //  $search; 
+                                    ?>">
+                        <button class="btn btn-primary fs-xm" onclick="closeSearch()" type="button"
+                            style="border-radius: 0px 999px 999px 0px;"><i class="fa fa-times"
+                                aria-hidden="true"></i></button>
+                    </div>
+                </form>
                 <div class="search-container" id="searchResultsContainer"></div>
             </div>
         </div>
