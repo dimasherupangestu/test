@@ -2275,6 +2275,7 @@
 </div>
 <!-- End Flashsale -->
 
+
 <div class="container">
     <div class="PB-5 pt-5" style="border-radius: 10px;padding: 10px; overflow: hidden;margin-top: -50px;">
         <ul class="nav nav-pills tab-category gap-2 pb-2" id="pills-tab" role="tablist"
@@ -2376,7 +2377,7 @@
                         <!-- Free Fire Produk -->
                         <?php if ($game['category'] == 'Produk Populer'): ?>
 
-                            <div style="margin-bottom:30px; display:flex;" class="col-sm-3 col-lg-2 col-4 text-center">
+                            <div style="margin-bottom:30px; display:flex;" class="col-sm-3 col-lg-2 col-4 text-center" data-bs-toggle="modal" data-bs-target="#modal-content-7">
                                 <div class="card mb-3" style="">
                                     <div style="margin-bottom: 0px;" class="card" bis_skin_checked="1">
                                         <img src="<?= base_url(); ?>/assets/images/freefire.jpg" class="img-fluid img-games" style="border-radius: 15px 15px 15px 15px; display: block;">
@@ -2446,14 +2447,47 @@
                             </div>
                         </div>
 
-
                         <!-- Modal Free Fire -->
-                        <div class="modal-container-7" onclick="toggleModal8()"></div>
-                        <div class="modal-window-7 hidden-category" id="modal-content-7">
-                            <h2 style="text-align:center">
+                        <div class="modal fade" id="modal-content-7" tabindex="-1" onclick="toggleModal8()" aria-labelledby="modal-content-7" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="border-bottom: 0;">
+                                        <h5 class="modal-title text-center font-weight-bold fs" id="exampleModalLabel">FREE FIRE</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="infl-body" style="position: relativ;">
+                                            <?php foreach ($game['games'] as $loop): ?>
+                                                <?php if ($loop['games'] == 'FREE FIRE l' || $loop['games'] == 'FREE FIRE' && $loop['status'] == 'On'): ?>
+                                                    <div class="infl-body-item">
+                                                        <div style="margin-bottom: 0px;" class="card-infl">
+                                                            <a href="<?= base_url(); ?>/games/<?= $loop['slug']; ?>">
+                                                                <img src="<?= base_url(); ?>/assets/images/games/<?= $loop['image']; ?>" class="img-infl" style="border-radius: 10px;">
+                                                                <div data-v-16b318a8="" class="product-tile__clip-path-infl">
+                                                                    <img src="<?= base_url(); ?>/assets/images/favicon-hiddengame.png" alt="card-img" class="card-img">
+                                                                    <div class="card-title2-infl" style="font-weight:bold;"><?= $loop['games']; ?></div>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                <?php endif; ?>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="modal-container-7" onclick="toggleModal8()"></div>
+                        <div class="modal-window-7 hidden-category" id="modal-content-7" style="">
+                            <div style="text-align:center;display: flex; justify-content: center; align-items: center;">
                                 <h4 class="text-center" style="font-weight: bold; color: #000; font-size: 1.8rem; text-transform: uppercase;">Free Fire</h4>
-                            </h2>
-                            <div class="infl-body">
+                            </div>
+
+                            <div class="infl-body" style="position: relativ;">
                                 <?php foreach ($game['games'] as $loop): ?>
                                     <?php if ($loop['games'] == 'FREE FIRE l' || $loop['games'] == 'FREE FIRE' && $loop['status'] == 'On'): ?>
                                         <div class="infl-body-item">
@@ -2470,7 +2504,7 @@
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             </div>
-                        </div>
+                        </div> -->
 
 
                         <!-- Start Game -->
@@ -2478,7 +2512,7 @@
                         <?php foreach ($game['games'] as $loop): ?>
                             <?php if ($loop['status'] == 'On' && $loop['category'] != 'Influencer' && $game['category'] != 'Joki Rank' && $game['category'] != 'Games' && $loop['games'] != 'FREE FIRE' && $loop['games'] != 'FREE FIRE l'): ?>
                                 <div style="margin-bottom: 30px;display: flex;" class="col-sm-3 col-lg-2 col-4 text-center">
-                                    <div class="card mb-3" style="">
+                                    <div class="card mb-3" style="width: 99%;">
                                         <a href="<?= base_url(); ?>/games/<?= $loop['slug']; ?>" class="product_list">
                                             <div style="margin-bottom: 0px;" class="card" bis_skin_checked="1">
                                                 <img src="<?= base_url(); ?>/assets/images/games/<?= $loop['image']; ?>"

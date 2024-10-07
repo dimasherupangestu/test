@@ -1881,25 +1881,25 @@
                                             $currentTime = date('Y-m-d H:i:s');
                                             $expiredTime = $expired;
                                             $isExpired = strtotime($currentTime) > strtotime($expiredTime);
-
-                                            // Skip rendering if the flash sale has expired for this product
-                                            if ($isExpired) {
-                                                continue;
+                                            if ($isExpired == true) {
+                                                continue; // Skip rendering if the flash sale has expired
                                             }
                                             ?>
                                             <div id="<?= $loop['id'] ?>" class="col-6 col-lg-4 <?= ($loop['flashsale_part'] >= 1 && $loop['limitflashsale'] >= 1 ? "swiper-slide" : ""); ?>" style="padding-right: 5px;padding-left: 5px;display:grid;" data-flashsale-part="<?= $loop['flashsale_part']; ?>">
-                                                <input type="radio" for="product-<?= $loop['id']; ?>" id="product-<?= $loop['id']; ?>" class="radio-nominale" name="product" value="<?= $loop['id']; ?>" onchange="get_price(this.value);get_price_and_scroll(this.value, '<?= $loop['product']; ?>');" <?= $isExpired ? 'disabled' : ''; ?> onclick="toggleElement()">
-                                                <label for="product-<?= $loop['id']; ?>" <?= ($isExpired ? 'style="pointer-events: none; opacity: 0.5;"' : ''); ?> <?= ($loop['limitflashsale'] > 0) ? 'style="background: linear-gradient(45deg , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, rgba(255, 255, 255, 1) 50%, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD ); background-size: 700% 200%; animation: gradientAnimation 1.5s linear infinite;"' : '' ?>>
-
+                                                <input type="radio" for="product-<?= $loop['id']; ?>" id="product-<?= $loop['id']; ?>" class="radio-nominale" name="product" value="<?= $loop['id']; ?>" onchange="get_price(this.value);get_price_and_scroll(this.value, '<?= $loop['product']; ?>');" onclick="toggleElement()"> <label for="product-<?= $loop['id']; ?>" <?= ($loop['limitflashsale'] > 0) ? 'style="background: linear-gradient(45deg , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, rgba(255, 255, 255, 1) 50%, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD , #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD, #E1EEDD ); 
+                                                    background-size: 700% 200%;
+                                                    animation: gradientAnimation 1.5s linear infinite;"' : '' ?>>
                                                     <div style="text-align: center;margin-bottom:10px;margin-top:10px;">
                                                         <?php if (!empty($loop['image'])): ?>
-                                                            <img onerror="this.style.display='none'" src="<?= base_url(); ?>/assets/images/product/<?= $loop['image']; ?>" loading="lazy" class="icon-diamondx">
+                                                            <img onerror="this.style.display='none'"
+                                                                src="<?= base_url(); ?>/assets/images/product/<?= $loop['image']; ?>"
+                                                                loading="lazy" class="icon-diamondx">
                                                         <?php endif; ?>
                                                         <br>
-                                                        <a style="font-size: 14px;font-weight:600; text-align: center;color:var(--warna_hitam);" for="product-<?= $loop['id']; ?>"><?= $loop['product']; ?></a>
+                                                        <a style="font-size: 14px;font-weight:600; text-align: center;color:var(--warna_hitam);"
+                                                            for="product-<?= $loop['id']; ?>"><?= $loop['product']; ?></a>
                                                         <br>
                                                         <?php
-                                                        // Price calculation based on user level and discount
                                                         $price = null;
                                                         $discountPrice = null;
 
@@ -1922,13 +1922,40 @@
                                                                         $price = $loop['price'];
                                                                         break;
                                                                 }
+                                                            } else if ($price == 0 or empty($price)) {
+                                                                $price = $loop['price'];
+                                                            } else {
+                                                                $price = $loop['price'];
                                                             }
                                                             $discountPrice = $loop['discount_price'];
                                                         } else {
-                                                            // Regular price if no discount
-                                                            $price = $loop['price'];
+                                                            if ($users !== false) {
+                                                                switch ($users['level']) {
+                                                                    case 'Silver':
+                                                                        $price = !empty($loop['price_silver']) && $loop['price_silver'] !== 0 ? $loop['price_silver'] : $loop['price'];
+                                                                        break;
+                                                                    case 'Gold':
+                                                                        $price = !empty($loop['price_gold']) && $loop['price_gold'] !== 0 ? $loop['price_gold'] : $loop['price'];
+                                                                        break;
+                                                                    case 'Platinum':
+                                                                        $price = !empty($loop['price_platinum']) && $loop['price_platinum'] !== 0 ? $loop['price_platinum'] : $loop['price'];
+                                                                        break;
+                                                                    case 'Member':
+                                                                        $price = !empty($loop['price_bronze']) && $loop['price_bronze'] !== 0 ? $loop['price_bronze'] : $loop['price'];
+                                                                        break;
+                                                                    default:
+                                                                        $price = $loop['price'];
+                                                                        break;
+                                                                }
+                                                            } else if ($price == 0 or empty($price)) {
+                                                                $price = $loop['price'];
+                                                            } else {
+                                                                $price = $loop['price'];
+                                                            }
                                                         }
+
                                                         ?>
+
                                                         <a style="font-size: 12px; font-weight:500;color:var(--warna_hitam);" class="currency-idr">
                                                             <?= $price; ?>
                                                         </a>
@@ -1939,7 +1966,9 @@
 
                                                         <?php if (isset($loop['limitflashsale']) && $loop['limitflashsale'] > 0) : ?>
                                                             <div class="diskon-flashsale">
+                                                                <!-- <h3 id="expired_time_flash_sale"></h3>   -->
                                                                 <span class="limitflashsaletxt2">Tersisa : <?= $loop['limitflashsale']; ?></span>
+
                                                             </div>
                                                         <?php elseif (isset($loop['limitflashsale']) && $loop['limitflashsale'] === 0): ?>
                                                             <div class="diskon-flashsale">
@@ -1949,12 +1978,14 @@
                                                         <br>
                                                         <a style="margin-bottom:10px;"></a>
                                                     </div>
+
                                                     <!-- Ribbon Promo Diskon -->
                                                     <?php if (isset($loop['discount_number']) && $loop['discount_number'] > 0) : ?>
                                                         <div class="ribbon">
                                                             <span class="text-ribbon">-<?= $loop['discount_number']; ?>%</span>
                                                         </div>
                                                     <?php endif; ?>
+
                                                     <!-- Ribbon Flashsale -->
                                                     <?php if ($loop['flashsale_part'] >= 1 && $loop['limitflashsale'] >= 1): ?>
                                                         <div class="flashsale-ribbon">
@@ -1964,8 +1995,10 @@
                                                     </input>
                                                 </label>
                                             </div>
+                                            <?php
+                                            // endif;
+                                            ?>
                                         <?php endforeach ?>
-
                                     </div>
                                 </div>
                                 <?php if ($games['slug'] == 'joki-paket-rank'): ?>
@@ -2207,9 +2240,8 @@
                             if (distance <= 0) {
                                 clearInterval(x);
                                 $("#expired_time_flash_sale").text("Flash Sale Berakhir");
-                                $(".swiper-slide").addClass("sold-out");
-                                // Disable access to product after flash sale expiration
-                                // $('input[name="product"]').prop('disabled', true);
+                                $(".swiper-slide").addClass("sold-out"); // Disable access to product
+                                $(".radio-nominale").attr("disabled", true); // Disable radio buttons
                             } else {
                                 $("#expired_time_flash_sale").text("Flash Sale berhasil");
                             }
@@ -3363,16 +3395,7 @@
 
                         var buyButton = document.getElementById('buyButton');
                         buyButton.disabled = true; // Menonaktifkan tombol
-                        <?php
-                        $currentTime = date('Y-m-d H:i:s');
-                        $expiredTime = $expired;
-                        $isExpired = strtotime($currentTime) > strtotime($expiredTime);
-                        if (strtotime($currentTime) > strtotime($expiredTime)) :  ?>
 
-                            // Jika waktu flash sale sudah habis, harga flash sale tidak diambil dalam order
-                            return window.location.href = "<?= base_url('games/' . $games['slug'] . '/') ?>";
-
-                        <?php endif; ?>
                         <?php if ($games['target'] == 'joki'): ?>
                             var user_id = $('.name-joki').map(function() {
                                 return this.value;
